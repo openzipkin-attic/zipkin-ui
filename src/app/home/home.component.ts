@@ -32,7 +32,13 @@ export class HomeComponent {
             });
     }
 
+    find(){
+        console.log("hello");
+    }
 
+    formatTime(date: Date) {
+        return moment(date).format('HH:mm');
+    }
 
     formatDate(date: Date) {
         return moment(date).format('YYYY-MM-DD');
