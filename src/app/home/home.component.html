@@ -17,7 +17,7 @@
                         <option value="custom">User defined</option>
                     </select>
                     </div>
-                    <label for="durationInput" class="col-sm-2 control-label">Duration</label>
+                    <label for="durationInput" class="col-sm-1 control-label">Duration</label>
                     <div class="col-sm-2">
                         <div class="input-group ">
                             <div class="input-group-addon">>=</div>
@@ -26,7 +26,7 @@
                         </div>
                     </div>
 
-                    <label for="limitSelect" class="col-sm-2 control-label">Limit</label>
+                    <label for="limitSelect" class="col-sm-1 control-label">Limit</label>
                     <div class="col-sm-2">
                         <select class="form-control" id="limitSelect">
                         <option value="10">10</option>
@@ -34,31 +34,32 @@
                         <option value="100">100</option>
                         </select>
                     </div>
+                    <button type="submit" class="btn btn-primary btn-sm" (click)="find()">Find traces</button>
+                </div>
+                <div [hidden]="false">
+                    <div class="form-group form-group-sm">
+                        <label for="startDateInput" class="col-sm-2 control-label">Start time</label>
+                        <div class="col-sm-2">
+                            <input type="date" class="form-control" id="startDateInput" [value]="formatDate(startDate)">
+                        </div>
+
+                        <div class="col-sm-2">
+                            <input type="time" class="form-control" id="startTimeInput" [value]="formatTime(startDate)">
+                        </div>
+                    </div>
+
+                    <div class="form-group form-group-sm">
+                        <label for="endDateInput" class="col-sm-2 control-label">End time</label>
+                        <div class="col-sm-2">
+                            <input type="date" class="form-control" id="endDateInput" [value]="formatDate(endDate)">
+                        </div>
+
+                        <div class="col-sm-2">
+                            <input type="time" class="form-control" id="endTimeInput" [value]="formatTime(endDate)">
+                        </div>
+                    </div>
                 </div>
 
-                <div class="form-group form-group-sm">
-                    <label for="startDateInput" class="col-sm-2 control-label">Start time</label>
-                    <div class="col-sm-2">
-                        <input type="date" class="form-control" id="startDateInput" [value]="formatDate(startDate)">
-                    </div>
-
-                    <div class="col-sm-2">
-                        <input type="time" class="form-control" id="startTimeInput" [value]="formatTime(startDate)">
-                    </div>
-                </div>
-
-                <div class="form-group form-group-sm">
-                    <label for="endDateInput" class="col-sm-2 control-label">End time</label>
-                    <div class="col-sm-2">
-                        <input type="date" class="form-control" id="endDateInput" [value]="formatDate(endDate)">
-                    </div>
-
-                    <div class="col-sm-2">
-                        <input type="time" class="form-control" id="endTimeInput" [value]="formatTime(endDate)">
-                    </div>
-                </div>
-
-                <button type="submit" class="btn btn-primary btn-sm" (click)="find()">Find traces</button>
             </form>
         </div>
     </div>
