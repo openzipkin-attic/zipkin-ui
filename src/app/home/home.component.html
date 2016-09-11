@@ -1,8 +1,6 @@
 <div>
     <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h3 class="panel-title">Traces</h3>
-        </div>
+
         <div class="panel-body">
             <form>
                 <div class="form-group">
@@ -29,11 +27,7 @@
         </div>
     </div>
 
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h3 class="panel-title">Traces</h3>
-        </div>
-        <div class="panel-body">
+
             <div class="list-group">
                 <a *ngFor="let trace of traces" class="list-group-item" href="*">
                     <h4 class="list-group-item-heading">{{trace[0].annotations[0].endpoint.serviceName}}</h4>
@@ -47,6 +41,5 @@
                     </p>
                 </a>
             </div>
-        </div>
-    </div>
+
 </div>
