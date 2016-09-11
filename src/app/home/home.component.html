@@ -3,23 +3,37 @@
 
         <div class="panel-body">
             <form class="form-inline">
-                <div class="form-group">
+                <div class="form-group form-group-sm">
                     <label for="limitInput">Limit</label>
-                    <input type="number" class="form-control" id="limitInput" placeholder="Limit">
+                    <input type="number" class="form-control" id="limitInput" placeholder="Limit" [value]="limit">
                 </div>
-                <div class="form-group">
-                    <label for="startTimeInput">Start time</label>
-                    <input type="date" class="form-control" id="startTimeInput">
-                </div>
-
-                <div class="form-group">
-                    <label for="endTimeInput">End time</label>
-                    <input type="date" class="form-control" id="endTimeInput">
+                <div class="form-group form-group-sm">
+                    <label for="startDateInput">Start time</label>
+                    <input type="date" class="form-control" id="startDateInput" [value]="formatDate(startDate)">
                 </div>
 
-                <div class="form-group">
-                    <label for="durationInput">duration (μs) >=</label>
-                    <input type="number" class="form-control" id="durationInput" placeholder="">
+                <div class="form-group form-group-sm">
+                    <label for="startTimeInput"></label>
+                    <input type="time" class="form-control" id="startTimeInput">
+                </div>
+
+                <div class="form-group form-group-sm">
+                    <label for="endDateInput">End time</label>
+                    <input type="date" class="form-control" id="endDateInput" [value]="formatDate(endDate)">
+                </div>
+
+                <div class="form-group form-group-sm">
+                    <label for="endTimeInput"></label>
+                    <input type="time" class="form-control" id="endTimeInput">
+                </div>
+
+                <div class="form-group form-group-sm">
+                    <label for="durationInput">Duration</label>
+                    <div class="input-group">
+                        <div class="input-group-addon">>=</div>
+                        <input type="number" class="form-control" id="durationInput" placeholder="" [value]="minDuration">
+                        <div class="input-group-addon">μs</div>
+                    </div>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Find traces</button>
@@ -32,11 +46,11 @@
         <a *ngFor="let trace of traces" class="list-group-item" href="*">
             <h4 class="list-group-item-heading">{{trace[0].annotations[0].endpoint.serviceName}}</h4>
             <p class="list-group-item-text">
-                <span class="label label-primary">{{formatTime(trace[0].timestamp)}}</span>
-                <span class="label label-primary">{{formatDuration(trace[0].duration)}}</span>
+                <span class="label label-primary">{{formatTraceTimestamp(trace)}}</span>
+                <span class="label label-primary">{{formatTraceDuration(trace)}}</span>
 
                 <span class="label label-primary">{{trace.length}} spans</span>
-                <span *ngFor="let span of trace"><span class="label label-default">{{span.annotations[1].endpoint.serviceName}}</span> </span>
+                <span *ngFor="let span of trace"><span class="label label-success">{{span.annotations[1].endpoint.serviceName}}</span>                </span>
             </p>
         </a>
     </div>

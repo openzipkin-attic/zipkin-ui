@@ -8,10 +8,18 @@ import * as moment from 'moment'
 export class HomeComponent {
     http: Http;
     traces: Zipkin.Traces;
+    limit: number;
+    minDuration: number;
+    startDate: Date;
+    endDate: Date;
 
     constructor( @Inject(Http) http: Http) {
         this.http = http;
         this.load();
+        this.limit = 10;
+        this.minDuration = 0;
+        this.startDate = moment().toDate();
+        this.endDate = moment().subtract(1, "day").toDate();
     }
 
     load() {
@@ -24,11 +32,21 @@ export class HomeComponent {
             });
     }
 
-    formatTime(time: number) {
-        return moment(time / 1000).fromNow();
+
+
+    formatDate(date: Date) {
+        return moment(date).format('YYYY-MM-DD');
     }
 
-    formatDuration(duration: number) {
-        return moment.duration(duration / 1000).humanize();
+    formatTraceName(trace: Zipkin.Trace) {
+        return trace[0].annotations[0].endpoint.serviceName;
+    }
+
+    formatTraceTimestamp(trace: Zipkin.Trace) {
+        return moment(trace[0].timestamp / 1000).fromNow();
+    }
+
+    formatTraceDuration(trace: Zipkin.Trace) {
+        return moment.duration(trace[0].duration / 1000).humanize();
     }
 }
