@@ -33,14 +33,11 @@
             <h4 class="list-group-item-heading">{{trace[0].annotations[0].endpoint.serviceName}}</h4>
             <p class="list-group-item-text">
                 <span class="label label-primary">{{formatTime(trace[0].timestamp)}}</span>
-                <span class="label label-primary">{{trace[0].duration}}</span>
+                <span class="label label-primary">{{formatDuration(trace[0].duration)}}</span>
 
                 <span class="label label-primary">{{trace.length}} spans</span>
-                <span *ngFor="let span of trace" class="label label-default">
-                {{span.annotations[1].endpoint.serviceName}}
-            </span>
+                <span *ngFor="let span of trace"><span class="label label-default">{{span.annotations[1].endpoint.serviceName}}</span> </span>
             </p>
         </a>
     </div>
-
 </div>
