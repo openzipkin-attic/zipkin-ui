@@ -12,6 +12,7 @@ export class HomeComponent {
     minDuration: number;
     startDate: Date;
     endDate: Date;
+    customTime: boolean;
 
     constructor( @Inject(Http) http: Http) {
         this.http = http;
@@ -32,8 +33,18 @@ export class HomeComponent {
             });
     }
 
-    find(){
-        console.log("hello");
+    updateTimeSpan(value: string)
+    {
+        if (value === "custom"){
+            this.customTime = true;
+        }
+        else{
+            this.customTime = false;
+        }
+    }
+
+    find(timespan: string,minDuration: string,limit: string){
+        console.log(limit);
     }
 
     formatTime(date: Date) {

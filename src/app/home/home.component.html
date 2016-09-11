@@ -6,7 +6,7 @@
                 <div class="form-group  form-group-sm">
                     <label for="timeSelection" class="col-sm-2 control-label">Time span</label>
                     <div class="col-sm-2">
-                        <select class="form-control" id="timeSelection">
+                        <select class="form-control" #timeSelection (change)="updateTimeSpan(timeSelection.value)">
                         <option value="15">15 minutes</option>
                         <option value="30">30 minutes</option>
                         <option value="60">1 hour</option>
@@ -21,22 +21,22 @@
                     <div class="col-sm-2">
                         <div class="input-group ">
                             <div class="input-group-addon">>=</div>
-                            <input type="number" class="form-control" id="durationInput" placeholder="" [value]="minDuration">
+                            <input type="number" class="form-control" #durationInput placeholder="" [value]="minDuration">
                             <div class="input-group-addon">μs</div>
                         </div>
                     </div>
 
                     <label for="limitSelect" class="col-sm-1 control-label">Limit</label>
                     <div class="col-sm-2">
-                        <select class="form-control" id="limitSelect">
-                        <option value="10">10</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
+                        <select class="form-control" #limitSelect>
+                        <option value="10">10 traces</option>
+                        <option value="50">50 traces</option>
+                        <option value="100">100 traces</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-sm" (click)="find()">Find traces</button>
+                    <button type="submit" class="btn btn-primary btn-sm" (click)="find(timeSelection.value, durationInput.value , limitSelect.value)">Find traces</button>
                 </div>
-                <div [hidden]="false">
+                <div [hidden]="!customTime">
                     <div class="form-group form-group-sm">
                         <label for="startDateInput" class="col-sm-2 control-label">Start time</label>
                         <div class="col-sm-2">
