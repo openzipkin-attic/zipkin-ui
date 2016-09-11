@@ -1,0 +1,52 @@
+<div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Traces</h3>
+        </div>
+        <div class="panel-body">
+            <form>
+                <div class="form-group">
+                    <label for="limitInput">Limit</label>
+                    <input type="number" class="form-control" id="limitInput" placeholder="Limit">
+                </div>
+                <div class="form-group">
+                    <label for="startTimeInput">Start time</label>
+                    <input type="date" class="form-control" id="startTimeInput">
+                </div>
+
+                <div class="form-group">
+                    <label for="endTimeInput">End time</label>
+                    <input type="date" class="form-control" id="endTimeInput">
+                </div>
+
+                <div class="form-group">
+                    <label for="durationInput">duration (μs) >=</label>
+                    <input type="number" class="form-control" id="durationInput" placeholder="">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Find traces</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Traces</h3>
+        </div>
+        <div class="panel-body">
+            <div class="list-group">
+                <a *ngFor="let trace of traces" class="list-group-item" href="*">
+                    <h4 class="list-group-item-heading">{{trace[0].annotations[0].endpoint.serviceName}}</h4>
+                    <p class="list-group-item-text">
+                        {{trace[0].duration}}
+
+                        <span class="label label-primary">Spans {{trace.length}}</span>
+                        <span *ngFor="let span of trace" class="label label-default">
+                {{span.annotations[1].endpoint.serviceName}}
+            </span>
+                    </p>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
