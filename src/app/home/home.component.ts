@@ -71,6 +71,10 @@ export class HomeComponent {
         return moment(date).format('YYYY-MM-DD');
     }
 
+    formatTraceId(trace: Zipkin.Trace) {
+        return trace[0].id;
+    }
+
     formatTraceName(trace: Zipkin.Trace) {
         return trace[0].annotations[0].endpoint.serviceName;
     }
