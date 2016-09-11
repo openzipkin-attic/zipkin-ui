@@ -7,7 +7,7 @@ import {AppComponent} from './app.component';
 import {routing, appRoutingProviders} from './app.routing';
 import {HomeComponent} from './home/home.component';
 import {AboutComponent} from './about/about.component';
-import {TracesComponent} from './traces/traces.component';
+import {TraceComponent} from './trace/trace.component';
 import {DependenciesComponent} from './dependencies/dependencies.component';
 
 @NgModule({
@@ -15,7 +15,7 @@ import {DependenciesComponent} from './dependencies/dependencies.component';
         AppComponent,
         HomeComponent,
         AboutComponent,
-        TracesComponent,
+        TraceComponent,
         DependenciesComponent,
     ],
     imports: [

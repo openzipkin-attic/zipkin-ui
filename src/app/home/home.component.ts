@@ -21,4 +21,8 @@ export class HomeComponent {
                 this.traces = <Zipkin.Traces>(res.json());
             });
     }
+
+    formatTime(time: number){
+        return new Date(time/1000);
+    }
 }
