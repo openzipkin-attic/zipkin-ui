@@ -30,7 +30,6 @@ export class HomeComponent {
         let lookback = endTs - this.endDate.getTime();
         let minDuration = this.minDuration == 0?"":this.minDuration;
         let limit = this.limit;
-        let url = `http://localhost:9411/api/v1/traces?endTs=${endTs}&lookback=${lookback}`;
         let uri = `http://localhost:9411/api/v1/traces?endTs=${endTs}&lookback=${lookback}&annotationQuery=&limit=${limit}&minDuration=${minDuration}&serviceName=client&spanName=all`;
 
         console.log(uri);
