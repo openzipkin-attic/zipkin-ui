@@ -34,28 +34,28 @@
                         <option value="100">100 traces</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-sm" (click)="find(timeSelection.value, durationInput.value , limitSelect.value)">Find traces</button>
+                    <button type="submit" class="btn btn-primary btn-sm" (click)="find(timeSelection.value, durationInput.value , limitSelect.value, startDateInput.value, startTimeInput.value, endDateInput.value, endTimeInput.value)">Find traces</button>
                 </div>
                 <div [hidden]="!customTime">
                     <div class="form-group form-group-sm">
-                        <label for="startDateInput" class="col-sm-2 control-label">Start time</label>
+                        <label for="startDateInput" class="col-sm-2 control-label">From</label>
                         <div class="col-sm-2">
-                            <input type="date" class="form-control" id="startDateInput" [value]="formatDate(startDate)">
+                            <input type="date" class="form-control" #startDateInput [value]="formatDate(startDate)">
                         </div>
 
                         <div class="col-sm-2">
-                            <input type="time" class="form-control" id="startTimeInput" [value]="formatTime(startDate)">
+                            <input type="time" class="form-control" #startTimeInput [value]="formatTime(startDate)">
                         </div>
                     </div>
 
                     <div class="form-group form-group-sm">
-                        <label for="endDateInput" class="col-sm-2 control-label">End time</label>
+                        <label for="endDateInput" class="col-sm-2 control-label">To</label>
                         <div class="col-sm-2">
-                            <input type="date" class="form-control" id="endDateInput" [value]="formatDate(endDate)">
+                            <input type="date" class="form-control" #endDateInput [value]="formatDate(endDate)">
                         </div>
 
                         <div class="col-sm-2">
-                            <input type="time" class="form-control" id="endTimeInput" [value]="formatTime(endDate)">
+                            <input type="time" class="form-control" #endTimeInput [value]="formatTime(endDate)">
                         </div>
                     </div>
                 </div>

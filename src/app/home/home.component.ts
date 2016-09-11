@@ -16,35 +16,48 @@ export class HomeComponent {
 
     constructor( @Inject(Http) http: Http) {
         this.http = http;
-        this.load();
+
         this.limit = 10;
         this.minDuration = 0;
         this.startDate = moment().toDate();
         this.endDate = moment().subtract(1, "day").toDate();
+        this.load();
     }
 
     load() {
 
+        let endTs = this.startDate.getTime();
+        let lookback = endTs - this.endDate.getTime();
+        let uri = `http://localhost:9411/api/v1/traces?endTs=${endTs}&lookback=${lookback}`;
+        console.log(uri);
         this
             .http
-            .get('http://localhost:9411/api/v1/traces?endTs=1473586880399&lookback=3600000', {})
+            .get(uri, {})
             .subscribe(res => {
                 this.traces = <Zipkin.Traces>(res.json());
             });
     }
 
-    updateTimeSpan(value: string)
-    {
-        if (value === "custom"){
+    updateTimeSpan(value: string) {
+        if (value === "custom") {
             this.customTime = true;
         }
-        else{
+        else {
             this.customTime = false;
         }
     }
 
-    find(timespan: string,minDuration: string,limit: string){
-        console.log(limit);
+    find(timespan: string, minDuration: string, limit: string, startDate: string, startTime: string, endDate: string, endTime: string) {
+        if (timespan === "custom") {
+
+        } else {
+            this.startDate = moment().toDate();
+            this.endDate = moment().subtract(timespan, "minutes").toDate();
+        }
+        this.limit = +limit;
+        this.minDuration = +minDuration;
+
+        this.load();
     }
 
     formatTime(date: Date) {
