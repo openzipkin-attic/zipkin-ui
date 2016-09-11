@@ -32,10 +32,10 @@
         <a *ngFor="let trace of traces" class="list-group-item" href="*">
             <h4 class="list-group-item-heading">{{trace[0].annotations[0].endpoint.serviceName}}</h4>
             <p class="list-group-item-text">
-                {{formatTime(trace[0].timestamp)}}
-                {{trace[0].duration}}
+                <span class="label label-primary">{{formatTime(trace[0].timestamp)}}</span>
+                <span class="label label-primary">{{trace[0].duration}}</span>
 
-                <span class="label label-primary">Spans {{trace.length}}</span>
+                <span class="label label-primary">{{trace.length}} spans</span>
                 <span *ngFor="let span of trace" class="label label-default">
                 {{span.annotations[1].endpoint.serviceName}}
             </span>
