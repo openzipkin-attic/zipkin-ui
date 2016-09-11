@@ -3,8 +3,6 @@ import { Http, Headers, HTTP_PROVIDERS } from '@angular/http';
 import { Inject } from '@angular/core';
 import { Zipkin } from './../zipkin/zipkin';
 
-
-
 @Component({ selector: 'home', template: require('./home.component.html') })
 export class HomeComponent {
     http: Http;
