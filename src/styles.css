@@ -1,15 +1,64 @@
-.waiting {
+
+.span {
+    width:100%;
+    position: relative;
     height:15px;
+}
+
+.waiting-left {
+    height:17px;
     background-color:#00C853;
-    display:inline-block;
+    position: absolute;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+.waiting-right {
+    height:17px;
+    background-color:#00C853;
+    position: absolute;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
 }
 
 .server {
-    height:15px;
+    height:17px;
+    padding-left: 10px;
     background-color:#03A9F4;
-    display:inline-block;
+    position: absolute;
+    overflow: visible;
+    color: #fff;
 }
 
 .table-borderless tbody tr td, .table-borderless tbody tr th, .table-borderless thead tr th {
     border: none;
+    padding-top: 2px;
+    padding-bottom: 2px;
+     font-size: smaller;
+}
+
+.timeline {
+    border-left: 1px solid #000;
+    height: 20px;
+    width: 1px;
+    position: absolute;
+    opacity: 0.1;
+}
+
+.timeline1 {
+    left: 0%;
+}
+.timeline2 {
+    left: 20%;
+}
+.timeline3 {
+    left: 40%;
+}
+.timeline4 {
+    left: 60%;
+}
+.timeline5 {
+    left: 80%;
+}
+.timeline6 {
+    left: 100%;
 }
