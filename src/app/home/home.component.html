@@ -76,15 +76,22 @@
     </div>
 
     <div class="list-group">
-        <a *ngFor="let trace of zipkin.traces" class="list-group-item" href="#/trace/{{formatTraceId(trace)}}">
-            <p class="list-group-item-text">
-                <span class="col-xs-4">{{formatTraceName(trace)}} - {{formatTraceId(trace)}}</span>
-                <span class="label label-primary">{{formatTraceTimestamp(trace)}}</span>
-                <span class="label label-primary">{{formatTraceDuration(trace)}}</span>
+        <span *ngFor="let trace of zipkin.traces" class="list-group-item">
+            <div >
+            <span class="col-sm-4">
+                    <button class="btn btn-default btn-sm" (click)=toggleTrace(trace)>+</button>
+                    {{formatTraceName(trace)}} - {{formatTraceId(trace)}}
+            </span>
+            <span class="label label-primary">{{formatTraceTimestamp(trace)}}</span>
+            <span class="label label-primary">{{formatTraceDuration(trace)}}</span>
 
-                <span class="label label-primary">{{trace.length}} spans</span>
-                <span *ngFor="let span of trace"><span class="label label-success">{{span.annotations[1].endpoint.serviceName}}</span>                </span>
-            </p>
-        </a>
+            <span class="label label-primary">{{trace.length}} spans</span>
+            <span *ngFor="let span of trace"><span class="label label-success">{{span.annotations[1].endpoint.serviceName}}</span>        </span>
+        </div>
+        <div [hidden]="trace[0].expanded" style="height:200px;border:2px solid red;" >
+            <!-- GANTT GOES HERE -->
+
+        </div>
+        </span>
     </div>
 </div>

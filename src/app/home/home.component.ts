@@ -75,4 +75,8 @@ export class HomeComponent {
     formatTraceDuration(trace: Trace) {
         return moment.duration(trace[0].duration / 1000).humanize();
     }
+
+    toggleTrace(trace: Trace){
+        trace[0].expanded = !trace[0].expanded;
+    }
 }
