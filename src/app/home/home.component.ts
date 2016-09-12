@@ -26,7 +26,7 @@ export class HomeComponent {
 
         let minDuration = this.minDuration == 0 ? "" : this.minDuration;
         let limit = this.limit;
-        this.zipkin.load(this.serviceName,this.startDate, this.endDate, limit, minDuration);
+        this.zipkin.getTraces(this.serviceName,this.startDate, this.endDate, limit, minDuration);
     }
 
     updateTimeSpan(value: string) {

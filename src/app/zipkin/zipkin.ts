@@ -56,7 +56,7 @@ export class ZipkinService {
             });
     }
 
-    load(serviceName: string, startDate: Date, endDate: Date, limit: number, minDuration: string | number) {
+    getTraces(serviceName: string, startDate: Date, endDate: Date, limit: number, minDuration: string | number) {
         let endTs = startDate.getTime();
         let lookback = endTs - endDate.getTime();
 
