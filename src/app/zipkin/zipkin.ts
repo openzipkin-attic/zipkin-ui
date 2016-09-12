@@ -30,6 +30,7 @@ export interface Span {
     annotations: Annotation[];
     binaryAnnotations: BinaryAnnotation[];
     parent: Span;
+    expanded: boolean;
 }
 
 export type Trace = Span[];
@@ -61,13 +62,10 @@ export class ZipkinService {
         let endTs = startDate.getTime();
         let lookback = endTs - endDate.getTime();
 
-        var uri: string;
-        if (serviceName == undefined || serviceName == "[any]") {
-            uri = `http://localhost:9411/api/v1/traces?endTs=${endTs}&lookback=${lookback}&annotationQuery=&limit=${limit}&minDuration=${minDuration}&spanName=all`;
-        } else {
-            uri = `http://localhost:9411/api/v1/traces?endTs=${endTs}&lookback=${lookback}&annotationQuery=&limit=${limit}&minDuration=${minDuration}&serviceName=${serviceName}&spanName=all`;
+        var uri = `http://localhost:9411/api/v1/traces?endTs=${endTs}&lookback=${lookback}&annotationQuery=&limit=${limit}&minDuration=${minDuration}&spanName=all`;
+        if (serviceName != undefined && serviceName != "[any]") {
+            uri += `&serviceName=${serviceName}`
         }
-
 
         this.spans = {};
         console.log(uri);
@@ -81,6 +79,7 @@ export class ZipkinService {
                 this.traces.forEach(trace => {
                     trace.forEach(span => {
                         this.spans[span.id] = span;
+                        span.expanded = true;
                     });
                 });
 
