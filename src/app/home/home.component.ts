@@ -7,15 +7,10 @@ import * as moment from 'moment'
 @Component({ selector: 'home', template: require('./home.component.html') })
 export class HomeComponent {
     customTime: boolean;
-
     limit: number;
     minDuration: number;
     startDate: Date;
     endDate: Date;
-
-    traces: Traces;
-    spans: { [id: string]: Span };
-    services: string[];
 
     constructor( @Inject(ZipkinService) private zipkin: ZipkinService) {
         this.limit = 10;
@@ -30,9 +25,6 @@ export class HomeComponent {
         let minDuration = this.minDuration == 0 ? "" : this.minDuration;
         let limit = this.limit;
         this.zipkin.load(this.startDate, this.endDate, limit, minDuration);
-        this.spans = this.zipkin.spans;
-        this.traces = this.zipkin.traces;
-        this.services = this.zipkin.services;
     }
 
     updateTimeSpan(value: string) {

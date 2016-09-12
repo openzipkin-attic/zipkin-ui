@@ -4,6 +4,17 @@
         <div class="panel-body">
             <form class="form-horizontal">
                 <div class="form-group  form-group-sm">
+                    <label for="serviceSelect" class="col-sm-2 control-label">Service</label>
+                    <div class="col-sm-5">
+                        <select class="form-control" #serviceSelect>
+                        <option *ngFor="#o of zipkin.services" [value]="o">{{o}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group  form-group-sm">
+
+
                     <label for="timeSelection" class="col-sm-2 control-label">Time span</label>
                     <div class="col-sm-2">
                         <select class="form-control" #timeSelection (change)="updateTimeSpan(timeSelection.value)">
@@ -65,7 +76,7 @@
     </div>
 
     <div class="list-group">
-        <a *ngFor="let trace of traces" class="list-group-item" href="#/trace/{{formatTraceId(trace)}}">
+        <a *ngFor="let trace of zipkin.traces" class="list-group-item" href="#/trace/{{formatTraceId(trace)}}">
             <p class="list-group-item-text">
                 <span class="col-xs-4">{{formatTraceName(trace)}} - {{formatTraceId(trace)}}</span>
                 <span class="label label-primary">{{formatTraceTimestamp(trace)}}</span>
