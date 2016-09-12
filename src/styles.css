@@ -5,17 +5,17 @@
     height:15px;
 }
 
-.waiting-left {
+.waiting-left, .waiting-right {
     height:17px;
-    background-color:#00C853;
+    background-color:#33E67D;
     position: absolute;
+}
+
+.waiting-left {
     border-top-left-radius: 6px;
     border-bottom-left-radius: 6px;
 }
 .waiting-right {
-    height:17px;
-    background-color:#00C853;
-    position: absolute;
     border-top-right-radius: 6px;
     border-bottom-right-radius: 6px;
 }
@@ -23,10 +23,9 @@
 .server {
     height:17px;
     padding-left: 10px;
-    background-color:#03A9F4;
+    background-color:#54C8FC;
     position: absolute;
     overflow: visible;
-    color: #fff;
 }
 
 .table-borderless tbody tr td, .table-borderless tbody tr th, .table-borderless thead tr th {
