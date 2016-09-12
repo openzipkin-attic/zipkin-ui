@@ -64,11 +64,10 @@
         </div>
     </div>
 
-
     <div class="list-group">
-        <a *ngFor="let trace of traces" class="list-group-item" href="/trace/{{formatTraceId(trace)}}">
-            <h4 class="list-group-item-heading">{{formatTraceName(trace)}} - {{formatTraceId(trace)}}</h4>
+        <a *ngFor="let trace of traces" class="list-group-item" href="#/trace/{{formatTraceId(trace)}}">
             <p class="list-group-item-text">
+                <span class="col-xs-4">{{formatTraceName(trace)}} - {{formatTraceId(trace)}}</span>
                 <span class="label label-primary">{{formatTraceTimestamp(trace)}}</span>
                 <span class="label label-primary">{{formatTraceDuration(trace)}}</span>
 

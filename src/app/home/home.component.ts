@@ -1,22 +1,23 @@
 import { Component } from '@angular/core';
-import { Http, Headers, HTTP_PROVIDERS } from '@angular/http';
+
 import { Inject } from '@angular/core';
-import { Zipkin } from './../zipkin/zipkin';
+import { Span,Trace,Traces,ZipkinService } from './../zipkin/zipkin';
 import * as moment from 'moment'
 
 @Component({ selector: 'home', template: require('./home.component.html') })
 export class HomeComponent {
-    http: Http;
-    traces: Zipkin.Traces;
+    customTime: boolean;
+
     limit: number;
     minDuration: number;
     startDate: Date;
     endDate: Date;
-    customTime: boolean;
 
-    constructor( @Inject(Http) http: Http) {
-        this.http = http;
+        traces: Traces;
+    spans: { [id: string]: Span };
+    services: string[];
 
+    constructor(@Inject(ZipkinService) private zipkin : ZipkinService) {
         this.limit = 10;
         this.minDuration = 0;
         this.startDate = moment().toDate();
@@ -26,19 +27,12 @@ export class HomeComponent {
 
     load() {
 
-        let endTs = this.startDate.getTime();
-        let lookback = endTs - this.endDate.getTime();
         let minDuration = this.minDuration == 0?"":this.minDuration;
         let limit = this.limit;
-        let uri = `http://localhost:9411/api/v1/traces?endTs=${endTs}&lookback=${lookback}&annotationQuery=&limit=${limit}&minDuration=${minDuration}&serviceName=client&spanName=all`;
-
-        console.log(uri);
-        this
-            .http
-            .get(uri, {})
-            .subscribe(res => {
-                this.traces = <Zipkin.Traces>(res.json());
-            });
+        this.zipkin.load(this.startDate,this.endDate,limit,minDuration);
+        this.spans = this.zipkin.spans;
+        this.traces = this.zipkin.traces;
+        this.services = this.zipkin.services;
     }
 
     updateTimeSpan(value: string) {
@@ -71,19 +65,19 @@ export class HomeComponent {
         return moment(date).format('YYYY-MM-DD');
     }
 
-    formatTraceId(trace: Zipkin.Trace) {
+    formatTraceId(trace: Trace) {
         return trace[0].id;
     }
 
-    formatTraceName(trace: Zipkin.Trace) {
+    formatTraceName(trace: Trace) {
         return trace[0].annotations[0].endpoint.serviceName;
     }
 
-    formatTraceTimestamp(trace: Zipkin.Trace) {
+    formatTraceTimestamp(trace: Trace) {
         return moment(trace[0].timestamp / 1000).fromNow();
     }
 
-    formatTraceDuration(trace: Zipkin.Trace) {
+    formatTraceDuration(trace: Trace) {
         return moment.duration(trace[0].duration / 1000).humanize();
     }
 }

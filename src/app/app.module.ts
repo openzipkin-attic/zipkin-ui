@@ -8,6 +8,7 @@ import {routing, appRoutingProviders} from './app.routing';
 import {HomeComponent} from './home/home.component';
 import {AboutComponent} from './about/about.component';
 import {TraceComponent} from './trace/trace.component';
+import {ZipkinService} from './zipkin/zipkin';
 import {DependenciesComponent} from './dependencies/dependencies.component';
 
 @NgModule({
@@ -17,6 +18,7 @@ import {DependenciesComponent} from './dependencies/dependencies.component';
         AboutComponent,
         TraceComponent,
         DependenciesComponent,
+
     ],
     imports: [
         BrowserModule,
@@ -25,7 +27,7 @@ import {DependenciesComponent} from './dependencies/dependencies.component';
         JsonpModule,
         routing
     ],
-    providers: [appRoutingProviders],
+    providers: [appRoutingProviders,ZipkinService],
     bootstrap: [AppComponent]
 })
 
