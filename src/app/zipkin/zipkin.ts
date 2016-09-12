@@ -108,6 +108,7 @@ export class ZipkinService {
 
     sortTrace(span : Span, trace: Trace) {
         trace.push(span);
+        span.children.sort((a,b) => a.annotations[0].timestamp - b.annotations[0].timestamp);
         span.children.forEach(child => {
             this.sortTrace(child, trace);
         });
