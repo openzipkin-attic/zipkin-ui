@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 import { Inject } from '@angular/core';
-import { Span,Trace,Traces,ZipkinService } from './../zipkin/zipkin';
+import { Span, Trace, Traces, ZipkinService } from './../zipkin/zipkin';
 import * as moment from 'moment'
 
 @Component({ selector: 'home', template: require('./home.component.html') })
@@ -13,11 +13,11 @@ export class HomeComponent {
     startDate: Date;
     endDate: Date;
 
-        traces: Traces;
+    traces: Traces;
     spans: { [id: string]: Span };
     services: string[];
 
-    constructor(@Inject(ZipkinService) private zipkin : ZipkinService) {
+    constructor( @Inject(ZipkinService) private zipkin: ZipkinService) {
         this.limit = 10;
         this.minDuration = 0;
         this.startDate = moment().toDate();
@@ -27,9 +27,9 @@ export class HomeComponent {
 
     load() {
 
-        let minDuration = this.minDuration == 0?"":this.minDuration;
+        let minDuration = this.minDuration == 0 ? "" : this.minDuration;
         let limit = this.limit;
-        this.zipkin.load(this.startDate,this.endDate,limit,minDuration);
+        this.zipkin.load(this.startDate, this.endDate, limit, minDuration);
         this.spans = this.zipkin.spans;
         this.traces = this.zipkin.traces;
         this.services = this.zipkin.services;
