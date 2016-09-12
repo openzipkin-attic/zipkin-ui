@@ -82,11 +82,11 @@
                         <button class="btn btn-default btn-sm" style="padding-left:8px;padding-right:8px;padding-top:2px;padding-bottom:2px;" (click)=toggleTrace(trace)>{{expandedText(trace)}}</button>
                         <b>{{formatTraceName(trace)}} - {{formatTraceId(trace)}}</b>
                 </span>
-                <span class="label label-primary">{{formatTraceTimestamp(trace)}}</span>
-                <span class="label label-primary">{{formatTraceDuration(trace)}}</span>
+                <span class="col-sm-2">{{formatTraceTimestamp(trace)}}</span>
+                <span class="col-sm-2">{{formatTraceDuration(trace)}}</span>
 
                 <span class="label label-primary">{{trace.length}} spans</span>
-                <span *ngFor="let span of trace"><span class="label label-success">{{span.annotations[1].endpoint.serviceName}}</span>        </span>
+                <span *ngFor="let span of trace"><span class="label label-info">{{span.annotations[1].endpoint.serviceName}}</span>        </span>
             </div>
             <div [hidden]="!trace[0].expanded" style="padding-top:12px;">
                 <!-- GANTT GOES HERE -->
