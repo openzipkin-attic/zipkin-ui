@@ -46,42 +46,42 @@ export class ZipkinService {
 
     }
 
-    load(startDate: Date, endDate: Date, limit: number, minDuration: string | number) {
+    getServices() {
+         this
+            .http
+            .get("http://localhost:9411/api/v1/services", {})
+            .subscribe(res => {
+                this.services = <string[]>(res.json());
+                this.services.push("[any]");
+            });
+    }
+
+    load(serviceName: string, startDate: Date, endDate: Date, limit: number, minDuration: string | number) {
         let endTs = startDate.getTime();
         let lookback = endTs - endDate.getTime();
 
-        let uri = `http://localhost:9411/api/v1/traces?endTs=${endTs}&lookback=${lookback}&annotationQuery=&limit=${limit}&minDuration=${minDuration}&serviceName=client&spanName=all`;
+        var uri: string;
+        if (serviceName == undefined || serviceName == "[any]") {
+            uri = `http://localhost:9411/api/v1/traces?endTs=${endTs}&lookback=${lookback}&annotationQuery=&limit=${limit}&minDuration=${minDuration}&spanName=all`;
+        } else {
+            uri = `http://localhost:9411/api/v1/traces?endTs=${endTs}&lookback=${lookback}&annotationQuery=&limit=${limit}&minDuration=${minDuration}&serviceName=${serviceName}&spanName=all`;
+        }
+
+
         this.spans = {};
-        this.services = [];
         console.log(uri);
         this
             .http
             .get(uri, {})
             .subscribe(res => {
                 this.traces = <Traces>(res.json());
-                let serviceNames: { [key: string]: string } = {};
 
                 //flat map all spans
                 this.traces.forEach(trace => {
                     trace.forEach(span => {
                         this.spans[span.id] = span;
-                        let annotations = span.annotations || [];
-                        annotations.forEach(annotation => {
-                            serviceNames[annotation.endpoint.serviceName] = annotation.endpoint.serviceName;
-                        });
-
-                        let binaryAnnotations = span.binaryAnnotations || [];
-                        binaryAnnotations.forEach(annotation => {
-                            serviceNames[annotation.endpoint.serviceName] = annotation.endpoint.serviceName;
-                        });
                     });
                 });
-
-                //get service names
-                for (let key in serviceNames || []) {
-                    this.services.push(key);
-                }
-                //  console.log(this.services);
 
                 //Map parents to children
                 for (let key in this.spans) {
@@ -93,8 +93,6 @@ export class ZipkinService {
                         span.parent = null;
                     }
                 }
-
-                //    console.log(this.spans);
             });
     }
 }

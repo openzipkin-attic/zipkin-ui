@@ -11,12 +11,14 @@ export class HomeComponent {
     minDuration: number;
     startDate: Date;
     endDate: Date;
+    serviceName: string;
 
     constructor( @Inject(ZipkinService) private zipkin: ZipkinService) {
         this.limit = 10;
         this.minDuration = 0;
         this.startDate = moment().toDate();
         this.endDate = moment().subtract(1, "day").toDate();
+        this.zipkin.getServices();
         this.load();
     }
 
@@ -24,7 +26,7 @@ export class HomeComponent {
 
         let minDuration = this.minDuration == 0 ? "" : this.minDuration;
         let limit = this.limit;
-        this.zipkin.load(this.startDate, this.endDate, limit, minDuration);
+        this.zipkin.load(this.serviceName,this.startDate, this.endDate, limit, minDuration);
     }
 
     updateTimeSpan(value: string) {
@@ -36,13 +38,14 @@ export class HomeComponent {
         }
     }
 
-    find(timespan: string, minDuration: string, limit: string, startDate: string, startTime: string, endDate: string, endTime: string) {
+    find(serviceName: string, timespan: string, minDuration: string, limit: string, startDate: string, startTime: string, endDate: string, endTime: string) {
         if (timespan === "custom") {
 
         } else {
             this.startDate = moment().toDate();
             this.endDate = moment().subtract(timespan, "minutes").toDate();
         }
+        this.serviceName = serviceName;
         this.limit = +limit;
         this.minDuration = +minDuration;
 
