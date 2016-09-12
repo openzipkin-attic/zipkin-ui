@@ -1,0 +1,18 @@
+<div>
+    <table class="table table-striped table-condensed table-borderless" style="border:0px;">
+        <tr>
+            <th class="col-md-2">Service</th>
+            <th class="col-md-10">Timeline</th>
+        </tr>
+        <tr>
+            <td></td>
+            <td>0</td>
+        </tr>
+        <tr *ngFor="let span of trace" >
+            <td>{{formatServiceName(span)}}</td>
+            <td>
+                <div style="width:100px;" class="waiting"></div><div style="width:100px;" class="server"></div><div style="width:50%;" class="waiting"></div>
+            </td>
+        </tr>
+    </table>
+</div>

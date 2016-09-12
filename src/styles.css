@@ -1,0 +1,15 @@
+.waiting {
+    height:15px;
+    background-color:#00C853;
+    display:inline-block;
+}
+
+.server {
+    height:15px;
+    background-color:#03A9F4;
+    display:inline-block;
+}
+
+.table-borderless tbody tr td, .table-borderless tbody tr th, .table-borderless thead tr th {
+    border: none;
+}

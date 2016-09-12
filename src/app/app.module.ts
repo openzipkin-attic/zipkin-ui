@@ -8,6 +8,7 @@ import {routing, appRoutingProviders} from './app.routing';
 import {HomeComponent} from './home/home.component';
 import {AboutComponent} from './about/about.component';
 import {TraceComponent} from './trace/trace.component';
+import {TraceChartComponent} from './tracechart/tracechart.component';
 import {ZipkinService} from './zipkin/zipkin';
 import {DependenciesComponent} from './dependencies/dependencies.component';
 
@@ -18,7 +19,7 @@ import {DependenciesComponent} from './dependencies/dependencies.component';
         AboutComponent,
         TraceComponent,
         DependenciesComponent,
-
+        TraceChartComponent
     ],
     imports: [
         BrowserModule,
