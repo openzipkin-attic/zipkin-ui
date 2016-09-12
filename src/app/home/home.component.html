@@ -79,7 +79,7 @@
         <span *ngFor="let trace of zipkin.traces" class="list-group-item">
             <div >
                 <span class="col-sm-4">
-                        <button class="btn btn-default btn-sm" style="padding-left:8px;padding-right:8px;padding-top:2px;padding-bottom:2px;" (click)=toggleTrace(trace)>{{expandedText(trace)}}</button>
+                        <button class="btn btn-default btn-sm btn-expander" style="padding-left:8px;padding-right:8px;padding-top:2px;padding-bottom:2px;" (click)=toggleTrace(trace)>{{expandedText(trace)}}</button>
                         <b>{{formatTraceName(trace)}} - {{formatTraceId(trace)}}</b>
                 </span>
                 <span class="col-sm-2">{{formatTraceTimestamp(trace)}}</span>

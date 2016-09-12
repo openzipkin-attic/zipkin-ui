@@ -1,4 +1,6 @@
-
+.btn-expander {
+    width: 30px;
+}
 .span {
     width:100%;
     position: relative;
@@ -12,12 +14,12 @@
 }
 
 .waiting-left {
-    border-top-left-radius: 6px;
-    border-bottom-left-radius: 6px;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
 }
 .waiting-right {
-    border-top-right-radius: 6px;
-    border-bottom-right-radius: 6px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
 }
 
 .server {
@@ -26,6 +28,7 @@
     background-color:#54C8FC;
     position: absolute;
     overflow: visible;
+    white-space: nowrap;
 }
 
 .table-borderless tbody tr td, .table-borderless tbody tr th, .table-borderless thead tr th {
