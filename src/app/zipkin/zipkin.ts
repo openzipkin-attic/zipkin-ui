@@ -53,6 +53,7 @@ export class ZipkinService {
             .subscribe(res => {
                 this.services = <string[]>(res.json());
                 this.services.push("[any]");
+                this.services.sort();
             });
     }
 
