@@ -1,6 +1,6 @@
 import {Component, ElementRef} from '@angular/core';
 import { Inject, Input } from '@angular/core';
-import { Span, Trace, Traces, ZipkinService } from './../zipkin/zipkin';
+import { Span, Trace, Traces, Annotation, ZipkinService } from './../zipkin/zipkin';
 import * as moment from 'moment';
 
 
@@ -75,5 +75,9 @@ export class TraceChartComponent {
         let total = this.maxTime - this.minTime;
         let current = timestamp - this.minTime;
         return Math.round(current / total * 100);
+    }
+
+    getAnnotation(annotation : Annotation) {
+        return this.getPercent(annotation.timestamp);
     }
 }

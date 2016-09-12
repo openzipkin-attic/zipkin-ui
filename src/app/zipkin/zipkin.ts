@@ -30,6 +30,7 @@ export interface Span {
     annotations: Annotation[];
     binaryAnnotations: BinaryAnnotation[];
     parent: Span;
+    children: Span[];
     expanded: boolean;
 }
 
@@ -80,6 +81,7 @@ export class ZipkinService {
                     trace.forEach(span => {
                         this.spans[span.id] = span;
                         span.expanded = true;
+                        span.children = [];
                     });
                 });
 
@@ -88,6 +90,7 @@ export class ZipkinService {
                     var span = this.spans[key];
                     if (span.parentId) {
                         span.parent = this.spans[span.parentId];
+                        span.parent.children.push(span);
                     }
                     else {
                         span.parent = null;
@@ -95,9 +98,19 @@ export class ZipkinService {
                 }
 
                 this.traces.forEach(trace => {
-                    trace[0].expanded = false;
+                    let root = trace[0];
+                    root.expanded = false;
+                    trace.length = 0;
+                    this.sortTrace(root,trace);
                 });
             });
+    }
+
+    sortTrace(span : Span, trace: Trace) {
+        trace.push(span);
+        span.children.forEach(child => {
+            this.sortTrace(child, trace);
+        });
     }
 }
 

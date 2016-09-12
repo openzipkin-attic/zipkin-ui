@@ -9,7 +9,7 @@
 
 .waiting-left, .waiting-right {
     height:17px;
-    background-color:#33E67D;
+    background-color:#93E65D;
     position: absolute;
 }
 
@@ -63,4 +63,13 @@
 }
 .timeline6 {
     left: 100%;
+}
+
+.annotation {
+    border: 1px solid #000;
+    border-radius: 6px;
+    background-color: #fff;
+    height: 17px;
+    width: 17px;
+    position: absolute;
 }
