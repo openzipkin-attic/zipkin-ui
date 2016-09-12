@@ -79,7 +79,7 @@
         <span *ngFor="let trace of zipkin.traces" class="list-group-item">
             <div >
             <span class="col-sm-4">
-                    <button class="btn btn-default btn-sm" (click)=toggleTrace(trace)>+</button>
+                    <button class="btn btn-default btn-sm" style="padding-left:8px;padding-right:8px;padding-top:2px;padding-bottom:2px;" (click)=toggleTrace(trace)>{{expandedText(trace)}}</button>
                     {{formatTraceName(trace)}} - {{formatTraceId(trace)}}
             </span>
             <span class="label label-primary">{{formatTraceTimestamp(trace)}}</span>
@@ -88,7 +88,7 @@
             <span class="label label-primary">{{trace.length}} spans</span>
             <span *ngFor="let span of trace"><span class="label label-success">{{span.annotations[1].endpoint.serviceName}}</span>        </span>
         </div>
-        <div [hidden]="trace[0].expanded" style="height:200px;border:2px solid red;" >
+        <div [hidden]="!trace[0].expanded" style="height:200px;border:2px solid red;" >
             <!-- GANTT GOES HERE -->
 
         </div>

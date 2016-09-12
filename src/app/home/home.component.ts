@@ -79,4 +79,12 @@ export class HomeComponent {
     toggleTrace(trace: Trace){
         trace[0].expanded = !trace[0].expanded;
     }
+
+    expandedText(trace: Trace) {
+        if (trace[0].expanded) {
+            return "-";
+        } else {
+            return "+";
+        }
+    }
 }

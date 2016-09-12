@@ -93,6 +93,10 @@ export class ZipkinService {
                         span.parent = null;
                     }
                 }
+
+                this.traces.forEach(trace => {
+                    trace[0].expanded = false;
+                });
             });
     }
 }
