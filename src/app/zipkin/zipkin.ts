@@ -1,5 +1,5 @@
 import { Injectable, Inject} from '@angular/core';
-
+import * as moment from 'moment'
 import { Http, Headers, HTTP_PROVIDERS } from '@angular/http';
 
 export interface Endpoint {
@@ -37,7 +37,13 @@ export interface Span {
 export class Trace {
     expanded: boolean = false;
     spans: Span[] = [];
+    id: string;
+    name: string;
     constructor(spans: Span[]) {
+        let root = spans[0];
+        this.name = root.annotations[1].endpoint.serviceName;
+        this.id = root.traceId;
+
         let lookup: { [id: string]: Span } = {};
         spans.forEach(span => {
             span.expanded = true;
@@ -55,7 +61,27 @@ export class Trace {
             }
         });
 
-        this.sortTrace(spans[0]);
+        this.sortTrace(root);
+    }
+
+    formatTimestamp() {
+        return moment(this.spans[0].timestamp / 1000).fromNow();
+    }
+
+    formatDuration() {
+        return moment.duration(this.spans[0].duration / 1000).humanize();
+    }
+
+    expandedText() {
+        if (this.expanded) {
+            return "-";
+        } else {
+            return "+";
+        }
+    }
+
+    toggleTrace() {
+        this.expanded = !this.expanded;
     }
 
     sortTrace(span: Span) {

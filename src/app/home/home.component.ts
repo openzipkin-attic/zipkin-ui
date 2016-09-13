@@ -59,32 +59,4 @@ export class HomeComponent {
     formatDate(date: Date) {
         return moment(date).format('YYYY-MM-DD');
     }
-
-    formatTraceId(trace: Trace) {
-        return trace.spans[0].id;
-    }
-
-    formatTraceName(trace: Trace) {
-        return trace.spans[0].annotations[0].endpoint.serviceName;
-    }
-
-    formatTraceTimestamp(trace: Trace) {
-        return moment(trace.spans[0].timestamp / 1000).fromNow();
-    }
-
-    formatTraceDuration(trace: Trace) {
-        return moment.duration(trace.spans[0].duration / 1000).humanize();
-    }
-
-    toggleTrace(trace: Trace){
-        trace.expanded = !trace.expanded;
-    }
-
-    expandedText(trace: Trace) {
-        if (trace.expanded) {
-            return "-";
-        } else {
-            return "+";
-        }
-    }
 }
