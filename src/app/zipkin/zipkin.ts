@@ -70,7 +70,7 @@ export class Trace {
             uniqueId += span.name + span.annotations[0].endpoint.serviceName;
         });
 
-        this.color = "#" + this.hashString(uniqueId).toString(16).substr(0,6);
+        this.color = "#" + Math.abs(this.hashString(uniqueId)).toString(16).substr(0,6);
         console.log(this.color);
     }
 
