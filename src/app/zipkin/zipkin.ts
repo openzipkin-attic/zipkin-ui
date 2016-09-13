@@ -34,14 +34,45 @@ export interface Span {
     expanded: boolean;
 }
 
-export type Trace = Span[];
+export class Trace {
+    expanded: boolean = false;
+    spans: Span[] = [];
+    constructor(spans: Span[]) {
+        let lookup: { [id: string]: Span } = {};
+        spans.forEach(span => {
+            span.expanded = true;
+            span.children = [];
+            lookup[span.id] = span;
+        });
+
+        spans.forEach(span => {
+            if (span.parentId) {
+                span.parent = lookup[span.parentId];
+                span.parent.children.push(span);
+            }
+            else {
+                span.parent = null;
+            }
+        });
+
+        this.sortTrace(spans[0]);
+    }
+
+    sortTrace(span: Span) {
+        this.spans.push(span);
+        span.children.sort((a, b) => a.annotations[0].timestamp - b.annotations[0].timestamp);
+        span.children.forEach(child => {
+            this.sortTrace(child);
+        });
+    }
+}
 
 export type Traces = Trace[]
 
 @Injectable()
 export class ZipkinService {
     traces: Traces;
-    spans: { [id: string]: Span };
+
     services: string[];
 
     constructor( @Inject(Http) private http: Http) {
@@ -49,7 +80,7 @@ export class ZipkinService {
     }
 
     getServices() {
-         this
+        this
             .http
             .get("http://localhost:9411/api/v1/services", {})
             .subscribe(res => {
@@ -68,50 +99,15 @@ export class ZipkinService {
             uri += `&serviceName=${serviceName}`
         }
 
-        this.spans = {};
         console.log(uri);
         this
             .http
             .get(uri, {})
             .subscribe(res => {
-                this.traces = <Traces>(res.json());
+                let traces = <Span[][]>(res.json());
 
-                //flat map all spans
-                this.traces.forEach(trace => {
-                    trace.forEach(span => {
-                        this.spans[span.id] = span;
-                        span.expanded = true;
-                        span.children = [];
-                    });
-                });
-
-                //Map parents to children
-                for (let key in this.spans) {
-                    var span = this.spans[key];
-                    if (span.parentId) {
-                        span.parent = this.spans[span.parentId];
-                        span.parent.children.push(span);
-                    }
-                    else {
-                        span.parent = null;
-                    }
-                }
-
-                this.traces.forEach(trace => {
-                    let root = trace[0];
-                    root.expanded = false;
-                    trace.length = 0;
-                    this.sortTrace(root,trace);
-                });
+                this.traces = traces.map(spans => new Trace(spans));
             });
-    }
-
-    sortTrace(span : Span, trace: Trace) {
-        trace.push(span);
-        span.children.sort((a,b) => a.annotations[0].timestamp - b.annotations[0].timestamp);
-        span.children.forEach(child => {
-            this.sortTrace(child, trace);
-        });
     }
 }
 

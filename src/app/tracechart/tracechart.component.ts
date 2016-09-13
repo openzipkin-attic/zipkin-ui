@@ -17,7 +17,7 @@ export class TraceChartComponent {
     ngOnInit() {
         this.maxTime = Number.MIN_VALUE;
         this.minTime = Number.MAX_VALUE;
-        this.trace.forEach(span => {
+        this.trace.spans.forEach(span => {
             let annotations = span.annotations || [];
             annotations.forEach(annotation => {
                 this.minTime = Math.min(this.minTime, annotation.timestamp);

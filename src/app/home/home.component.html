@@ -85,10 +85,10 @@
                 <span class="col-sm-2">{{formatTraceTimestamp(trace)}}</span>
                 <span class="col-sm-2">{{formatTraceDuration(trace)}}</span>
 
-                <span class="label label-primary">{{trace.length}} spans</span>
-                <span *ngFor="let span of trace"><span class="label label-info">{{span.annotations[1].endpoint.serviceName}}</span>        </span>
+                <span class="label label-default">{{trace.length}} spans</span>
+
             </div>
-            <div [hidden]="!trace[0].expanded" style="padding-top:12px;">
+            <div [hidden]="!trace.expanded" style="padding-top:12px;">
                 <!-- GANTT GOES HERE -->
                 <tracechart [trace]="trace"></tracechart>
             </div>

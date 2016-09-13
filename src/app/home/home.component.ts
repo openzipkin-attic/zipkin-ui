@@ -61,27 +61,27 @@ export class HomeComponent {
     }
 
     formatTraceId(trace: Trace) {
-        return trace[0].id;
+        return trace.spans[0].id;
     }
 
     formatTraceName(trace: Trace) {
-        return trace[0].annotations[0].endpoint.serviceName;
+        return trace.spans[0].annotations[0].endpoint.serviceName;
     }
 
     formatTraceTimestamp(trace: Trace) {
-        return moment(trace[0].timestamp / 1000).fromNow();
+        return moment(trace.spans[0].timestamp / 1000).fromNow();
     }
 
     formatTraceDuration(trace: Trace) {
-        return moment.duration(trace[0].duration / 1000).humanize();
+        return moment.duration(trace.spans[0].duration / 1000).humanize();
     }
 
     toggleTrace(trace: Trace){
-        trace[0].expanded = !trace[0].expanded;
+        trace.expanded = !trace.expanded;
     }
 
     expandedText(trace: Trace) {
-        if (trace[0].expanded) {
+        if (trace.expanded) {
             return "-";
         } else {
             return "+";
