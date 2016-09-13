@@ -73,3 +73,14 @@
     width: 17px;
     position: absolute;
 }
+
+.color-identifier {
+    width:30px;
+    height:24px;
+    display:inline-block;
+    margin-left:5px;
+    margin-right:5px;
+    border:1px solid #000;
+    border-radius: 3px;
+    opacity: 0.5;
+}

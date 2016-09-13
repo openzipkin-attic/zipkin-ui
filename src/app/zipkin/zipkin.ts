@@ -39,6 +39,7 @@ export class Trace {
     spans: Span[] = [];
     id: string;
     name: string;
+    color: string;
     constructor(spans: Span[]) {
         let root = spans[0];
         this.name = root.annotations[1].endpoint.serviceName;
@@ -51,6 +52,7 @@ export class Trace {
             lookup[span.id] = span;
         });
 
+        var uniqueId = "";
         spans.forEach(span => {
             if (span.parentId) {
                 span.parent = lookup[span.parentId];
@@ -59,10 +61,29 @@ export class Trace {
             else {
                 span.parent = null;
             }
+
         });
 
         this.sortTrace(root);
+
+        this.spans.forEach(span => {
+            uniqueId += span.name + span.annotations[0].endpoint.serviceName;
+        });
+
+        this.color = "#" + this.hashString(uniqueId).toString(16).substr(0,6);
+        console.log(this.color);
     }
+
+    hashString (str : string) {
+        var hash = 0, i : number, chr : number, len : number;
+        if (str.length === 0) return hash;
+        for (i = 0, len = str.length; i < len; i++) {
+            chr = str.charCodeAt(i);
+            hash = ((hash << 5) - hash) + chr;
+            hash |= 0; // Convert to 32bit integer
+        }
+        return hash;
+    };
 
     formatTimestamp() {
         return moment(this.spans[0].timestamp / 1000).fromNow();

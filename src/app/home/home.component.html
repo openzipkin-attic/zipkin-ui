@@ -80,6 +80,7 @@
             <div >
                 <span class="col-sm-4">
                         <button class="btn btn-default btn-sm btn-expander" style="padding-left:8px;padding-right:8px;padding-top:2px;padding-bottom:2px;" (click)=trace.toggleTrace()>{{trace.expandedText()}}</button>
+                        <span title="Call graph hash color" class="color-identifier" [style.background-color]="trace.color" >&nbsp;</span>
                         <b>{{trace.name}} - {{trace.id}}</b>
                 </span>
                 <span class="col-sm-2">{{trace.formatTimestamp()}}</span>
