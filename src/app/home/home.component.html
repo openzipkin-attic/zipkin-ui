@@ -15,16 +15,16 @@
                 <div class="form-group  form-group-sm">
 
 
-                    <label for="timeSelection" class="col-sm-2 control-label">Time span</label>
+                    <label for="timeSelection" class="col-sm-2 control-label">Time range</label>
                     <div class="col-sm-2">
-                        <select class="form-control" #timeSelection (change)="updateTimeSpan(timeSelection.value)">
-                        <option value="15">15 minutes</option>
-                        <option value="30">30 minutes</option>
-                        <option value="60">1 hour</option>
-                        <option value="120">2 hours</option>
-                        <option value="480">8 hours</option>
-                        <option value="720">12 hours</option>
-                        <option value="1440">1 day</option>
+                        <select class="form-control" #timeSelection (change)="updateTimeRange(timeSelection.value)">
+                        <option value="15">Last 15 minutes</option>
+                        <option value="30">Last 30 minutes</option>
+                        <option value="60">Last hour</option>
+                        <option value="120">Last 2 hours</option>
+                        <option value="480">Last 8 hours</option>
+                        <option value="720">Last 12 hours</option>
+                        <option value="1440">Last day</option>
                         <option value="custom">User defined</option>
                     </select>
                     </div>
