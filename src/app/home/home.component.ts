@@ -29,7 +29,7 @@ export class HomeComponent {
         this.zipkin.getTraces(this.serviceName,this.startDate, this.endDate, limit, minDuration);
     }
 
-    updateTimeSpan(value: string) {
+    updateTimeRange(value: string) {
         if (value === "custom") {
             this.customTime = true;
         }
@@ -38,12 +38,12 @@ export class HomeComponent {
         }
     }
 
-    find(serviceName: string, timespan: string, minDuration: string, limit: string, startDate: string, startTime: string, endDate: string, endTime: string) {
-        if (timespan === "custom") {
+    find(serviceName: string, timerange: string, minDuration: string, limit: string, startDate: string, startTime: string, endDate: string, endTime: string) {
+        if (timerange === "custom") {
 
         } else {
             this.startDate = moment().toDate();
-            this.endDate = moment().subtract(timespan, "minutes").toDate();
+            this.endDate = moment().subtract(timerange, "minutes").toDate();
         }
         this.serviceName = serviceName;
         this.limit = +limit;
