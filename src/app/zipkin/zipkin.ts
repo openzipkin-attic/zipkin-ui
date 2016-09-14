@@ -51,31 +51,39 @@ export class Trace {
             span.children = [];
             lookup[span.id] = span;
         });
-
+        var error = false;
         var uniqueId = "";
         spans.forEach(span => {
             if (span.parentId) {
                 span.parent = lookup[span.parentId];
-                span.parent.children.push(span);
+                if (span.parent == undefined) {
+                    console.log(span.parentId);
+                    console.log("undefined parent");
+                    error = true;
+                } else {
+                    span.parent.children.push(span);
+                }
+
             }
             else {
                 span.parent = null;
             }
 
         });
-
         this.sortTrace(root);
-
         this.spans.forEach(span => {
             uniqueId += span.name + span.annotations[0].endpoint.serviceName;
         });
+        if (error) {
+            this.color = "#ff0000";
+        } else {
+            this.color = "#" + Math.abs(this.hashString(uniqueId)).toString(16).substr(0, 6);
+        }
 
-        this.color = "#" + Math.abs(this.hashString(uniqueId)).toString(16).substr(0,6);
-        console.log(this.color);
     }
 
-    hashString (str : string) {
-        var hash = 0, i : number, chr : number, len : number;
+    hashString(str: string) {
+        var hash = 0, i: number, chr: number, len: number;
         if (str.length === 0) return hash;
         for (i = 0, len = str.length; i < len; i++) {
             chr = str.charCodeAt(i);
@@ -119,17 +127,17 @@ export type Traces = Trace[]
 @Injectable()
 export class ZipkinService {
     traces: Traces;
-
+    baseUri: string;
     services: string[];
 
     constructor( @Inject(Http) private http: Http) {
-
+        this.baseUri = "localhost";
     }
 
     getServices() {
         this
             .http
-            .get("http://localhost:9411/api/v1/services", {})
+            .get(`http://${this.baseUri}:9411/api/v1/services`, {})
             .subscribe(res => {
                 this.services = <string[]>(res.json());
                 this.services.push("[any]");
@@ -141,7 +149,7 @@ export class ZipkinService {
         let endTs = startDate.getTime();
         let lookback = endTs - endDate.getTime();
 
-        var uri = `http://localhost:9411/api/v1/traces?endTs=${endTs}&lookback=${lookback}&annotationQuery=&limit=${limit}&minDuration=${minDuration}&spanName=all`;
+        var uri = `http://${this.baseUri}:9411/api/v1/traces?endTs=${endTs}&lookback=${lookback}&annotationQuery=&limit=${limit}&minDuration=${minDuration}&spanName=all`;
         if (serviceName != undefined && serviceName != "[any]") {
             uri += `&serviceName=${serviceName}`
         }
