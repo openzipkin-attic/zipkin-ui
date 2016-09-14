@@ -9,23 +9,23 @@
 
 .waiting-left, .waiting-right {
     height:17px;
-    background-color:#93E65D;
+    background-color:#90f0a0;
     position: absolute;
 }
 
 .waiting-left {
-    border-top-left-radius: 2px;
-    border-bottom-left-radius: 2px;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
 }
 .waiting-right {
-    border-top-right-radius: 2px;
-    border-bottom-right-radius: 2px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
 }
 
 .server {
     height:17px;
     padding-left: 10px;
-    background-color:#54C8FC;
+    background-color:#80d0ff;
     position: absolute;
     overflow: visible;
     white-space: nowrap;
@@ -39,11 +39,11 @@
 }
 
 .timeline {
-    border-left: 1px solid #000;
+    border-left: 1px solid rgba(0, 0, 0, 0.2);
     height: 20px;
-    width: 1px;
+    width: 20%;
     position: absolute;
-    opacity: 0.1;
+    padding-left:5px;
 }
 
 .timeline1 {
@@ -83,4 +83,8 @@
     border:1px solid #000;
     border-radius: 3px;
     opacity: 0.5;
+}
+
+.container {
+    width: 90%;
 }

@@ -65,7 +65,7 @@ export class TraceChartComponent {
         return result;
     }
     formatSpanInfo(span: Span) {
-        return moment.duration(span.duration / 1000).asMilliseconds() + " ms : " + span.name;
+        return moment.duration(Math.round(span.duration / 1000)).asMilliseconds() + " ms : " + span.name;
     }
     formatServiceName(span: Span) {
         return span.annotations[1].endpoint.serviceName;
@@ -79,5 +79,13 @@ export class TraceChartComponent {
 
     getAnnotation(annotation : Annotation) {
         return this.getPercent(annotation.timestamp);
+    }
+
+    time(no: number){
+        var total = this.maxTime - this.minTime;
+        var part = total / 5;
+        var res = Math.round(part * no / 1000);
+
+        return moment.duration(res).asMilliseconds() + " ms";
     }
 }

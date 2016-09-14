@@ -1,27 +1,28 @@
 <div>
-    <table class="table table-striped table-borderless table-hover" style="border:0px;">
+    <table class="table table-borderless table-hover" style="border:0px;">
         <tr>
             <th class="col-md-1">Service</th>
-            <th class="col-md-11">Timeline</th>
+            <th class="col-md-10">Timeline</th>
+            <th class="col-md-1"></th>
         </tr>
         <tr>
             <td></td>
             <td>
                 <div class="span">
-                    <div class="timeline timeline1"></div>
-                    <div class="timeline timeline2"></div>
-                    <div class="timeline timeline3"></div>
-                    <div class="timeline timeline4"></div>
-                    <div class="timeline timeline5"></div>
-                    <div class="timeline timeline6"></div>
+                    <div class="timeline timeline1">{{time(0)}}</div>
+                    <div class="timeline timeline2">{{time(1)}}</div>
+                    <div class="timeline timeline3">{{time(2)}}</div>
+                    <div class="timeline timeline4">{{time(3)}}</div>
+                    <div class="timeline timeline5">{{time(4)}}</div>
+                    <div class="timeline timeline6">{{time(5)}}</div>
                 </div>
+            </td>
+            <td>
             </td>
         </tr>
         <tr *ngFor="let span of trace.spans">
             <td>{{formatServiceName(span)}}</td>
             <td>
-
-
                 <div class="span">
 
                     <div [style.left]="getCs1(span)+'%'" [style.width]="getCs2(span)+'%'" class="waiting-left"></div>
@@ -37,6 +38,7 @@
                     <div *ngFor="let annotation of getUserAnnotations(span)" [style.left]="getAnnotation(annotation)+'%'" class="annotation" ></div>
                 </div>
             </td>
+            <td></td>
         </tr>
     </table>
 </div>
