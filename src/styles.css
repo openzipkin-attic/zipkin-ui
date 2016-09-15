@@ -34,27 +34,29 @@
     position: absolute;
     overflow: visible;
     white-space: nowrap;
-    border: 1px solid lightblue;
+    border: 1px solid #caebff;
     cursor: pointer;
 }
 
 tr:hover .waiting-left, tr:hover .waiting-right {
-    background-color: #e8e8e8;
+    background-color: #e0e0e0;
+    border: 1px solid #e0e0e0;
 }
 
 tr:hover .server {
     background-color:#b6e0f9;
 }
 
-.waiting-left:hover, .waiting-right:hover {
-    border: 1px solid dimgray;
+tr:hover .waiting-left:hover, tr:hover .waiting-right:hover {
+    border: 1px solid #909090;
 }
 
 tr:hover .server {
     background-color:#b6e0f9;
+    border: 1px solid #b6e0f9;
 }
 
-.server:hover {
+tr:hover .server:hover {
     background-color:#b6e0f9;
     border: 1px solid dodgerblue;
 }
