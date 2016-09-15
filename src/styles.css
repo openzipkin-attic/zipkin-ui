@@ -125,3 +125,7 @@ tr:hover .server:hover {
 .container-fluid {
     width: 90%;
 }
+
+.popover{
+    max-width: 100%; /* Max Width of the popover (depending on the container!) */
+}

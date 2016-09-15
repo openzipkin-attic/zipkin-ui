@@ -61,11 +61,30 @@ export class TraceChartComponent {
         let result = annotations.filter((v, i) => v.value != "cr" && v.value != "cs" && v.value != "sr" && v.value != "ss");
         return result;
     }
+
+
+    formatServiceName(span: Span) {
+        return span.annotations[1].endpoint.serviceName;
+    }
+
+    formatSpanDetails(span: Span) {
+        var res = "";
+        span.annotations.forEach(annotation => {
+            res += annotation.value + " " +  annotation.endpoint.serviceName + " (" + annotation.endpoint.ipv4 + ":" + annotation.endpoint.port + ")" + "\r\n";
+        });
+        return res;
+    }
+
     formatSpanInfo(span: Span) {
         return moment.duration(Math.round(span.duration / 1000)).asMilliseconds() + " ms : " + span.name;
     }
-    formatServiceName(span: Span) {
-        return span.annotations[1].endpoint.serviceName;
+
+    formatDateTime(timestamp: number) {
+        return moment(timestamp/1000).format("YYYY-MM-DD - HH:mm:SS")
+    }
+
+    formatRelativeTime(timestamp: number) {
+        return moment.duration((timestamp-this.minTime) / 1000).asMilliseconds() + " MS";
     }
 
     getPercent(timestamp: number) {

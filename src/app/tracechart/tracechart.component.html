@@ -33,12 +33,27 @@
                         <div class="timeline timeline4"></div>
                         <div class="timeline timeline5"></div>
                         <div class="timeline timeline6"></div>
-                        <template #tipContent1>Client Send Server Receive<br>123 MS</template>
-                        <template #tipContent2>Server Receive Server Send<br>123 MS</template>
-                        <template #tipContent3>Server Send Client Receive<br>123 MS</template>
-                        <div [style.left]="getCs1(span)+'%'" [style.width]="getCs2(span)+'%'" class="waiting-left" [ngbPopover]="tipContent1" placement="top" triggers="mouseenter:mouseleave" title="Span">&nbsp;</div>
-                        <div [style.left]="getCr1(span)+'%'" [style.width]="getCr2(span)+'%'" class="waiting-right" [ngbPopover]="tipContent2" placement="top" triggers="mouseenter:mouseleave" title="Span">&nbsp;</div>
-                        <div [style.left]="getSr(span)+'%'" [style.width]="getSs(span)+'%'" class="server" [ngbPopover]="tipContent3" placement="top" triggers="mouseenter:mouseleave" title="Span">{{formatSpanInfo(span)}}</div>
+                        <template #tipContent>
+                            <table style="font-size:10px;">
+                                <tr>
+                                    <th>Date Time</th>
+                                    <th>Relative Time</th>
+                                    <th>Annotation</th>
+                                    <th>Address</th>>
+                                </tr>
+                                <tr *ngFor="let annotation of span.annotations">
+                                    <td>{{formatDateTime(annotation.timestamp)}}</td>
+                                    <td>{{formatRelativeTime(annotation.timestamp)}}</td>
+                                    <td>{{annotation.value}}</td>
+                                    <td>{{annotation.endpoint.ipv4}}:{{annotation.endpoint.port}} ({{annotation.endpoint.serviceName}})</td>
+                                </tr>
+                            </table>
+
+
+                        </template>
+                        <div [style.left]="getCs1(span)+'%'" [style.width]="getCs2(span)+'%'" class="waiting-left" [ngbPopover]="tipContent" placement="top" triggers="mouseenter:mouseleave" title="{{formatServiceName(span)}}">&nbsp;</div>
+                        <div [style.left]="getCr1(span)+'%'" [style.width]="getCr2(span)+'%'" class="waiting-right" [ngbPopover]="tipContent" placement="top" triggers="mouseenter:mouseleave" title="{{formatServiceName(span)}}">&nbsp;</div>
+                        <div [style.left]="getSr(span)+'%'" [style.width]="getSs(span)+'%'" class="server" [ngbPopover]="tipContent" placement="top" triggers="mouseenter:mouseleave" title="{{formatServiceName(span)}}">{{formatSpanInfo(span)}}</div>
 
                         <div *ngFor="let annotation of getUserAnnotations(span)" [style.left]="getAnnotation(annotation)+'%'" class="annotation"></div>
                     </div>
