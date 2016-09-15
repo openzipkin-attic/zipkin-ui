@@ -9,8 +9,9 @@
 
 .waiting-left, .waiting-right {
     height:17px;
-    background-color:#ededed;
+    background-color:#f0f0f0;
     position: absolute;
+    cursor: pointer;
 }
 
 .waiting-left {
@@ -36,6 +37,7 @@
     overflow: visible;
     white-space: nowrap;
     border: 1px solid lightblue;
+    cursor: pointer;
 }
 
 tr:hover .waiting-left, tr:hover .waiting-right {
@@ -54,7 +56,7 @@ tr:hover .server {
 }
 
 .timeline {
-    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    border-left: 1px solid #e0e0e0;
     height: 20px;
     width: 20%;
     position: absolute;
@@ -95,7 +97,6 @@ tr:hover .server {
     display:inline-block;
     margin-left:5px;
     margin-right:5px;
-    border:1px solid #000;
     border-radius: 3px;
     opacity: 0.5;
 }
