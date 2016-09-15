@@ -1,46 +1,50 @@
 <div>
     <table class="table table-borderless table-hover" style="border:0px;">
-        <tr>
-            <th class="col-md-1">Service</th>
-            <th class="col-md-10">Timeline</th>
-            <th class="col-md-1"></th>
-        </tr>
-        <tr>
-            <td></td>
-            <td>
-                <div class="span">
-                    <div class="timeline timeline1">{{time(0)}}</div>
-                    <div class="timeline timeline2">{{time(1)}}</div>
-                    <div class="timeline timeline3">{{time(2)}}</div>
-                    <div class="timeline timeline4">{{time(3)}}</div>
-                    <div class="timeline timeline5">{{time(4)}}</div>
-                    <div class="timeline timeline6">{{time(5)}}</div>
-                </div>
-            </td>
-            <td>
-            </td>
-        </tr>
-        <tr *ngFor="let span of trace.spans">
-            <td>{{formatServiceName(span)}}</td>
-            <td>
-                <div class="span">
-                    <div class="timeline timeline1"></div>
-                    <div class="timeline timeline2"></div>
-                    <div class="timeline timeline3"></div>
-                    <div class="timeline timeline4"></div>
-                    <div class="timeline timeline5"></div>
-                    <div class="timeline timeline6"></div>
-                    <template #tipContent1>Client Send Server Receive<br>123 MS</template>
-                    <template #tipContent2>Server Receive Server Send<br>123 MS</template>
-                    <template #tipContent3>Server Send Client Receive<br>123 MS</template>
-                    <div [style.left]="getCs1(span)+'%'" [style.width]="getCs2(span)+'%'" class="waiting-left" [ngbTooltip]="tipContent1" placement="left"></div>
-                    <div [style.left]="getCr1(span)+'%'" [style.width]="getCr2(span)+'%'" class="waiting-right" [ngbTooltip]="tipContent2" placement="left"></div>
-                    <div [style.left]="getSr(span)+'%'" [style.width]="getSs(span)+'%'" class="server" [ngbTooltip]="tipContent3" placement="left">{{formatSpanInfo(span)}}</div>
+        <thead class="thead">
+            <tr>
+                <th class="col-md-1">Service</th>
+                <th class="col-md-10">Timeline</th>
+                <th class="col-md-1"></th>
+            </tr>
+            <tr>
+                <td class="col-md-1"></td>
+                <td class="col-md-10">
+                    <div class="span">
+                        <div class="timeline timeline1">{{time(0)}}</div>
+                        <div class="timeline timeline2">{{time(1)}}</div>
+                        <div class="timeline timeline3">{{time(2)}}</div>
+                        <div class="timeline timeline4">{{time(3)}}</div>
+                        <div class="timeline timeline5">{{time(4)}}</div>
+                        <div class="timeline timeline6">{{time(5)}}</div>
+                    </div>
+                </td>
+                <td class="col-md-1">
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let span of trace.spans">
+                <td class="col-md-1">{{formatServiceName(span)}}</td>
+                <td class="col-md-10">
+                    <div class="span">
+                        <div class="timeline timeline1"></div>
+                        <div class="timeline timeline2"></div>
+                        <div class="timeline timeline3"></div>
+                        <div class="timeline timeline4"></div>
+                        <div class="timeline timeline5"></div>
+                        <div class="timeline timeline6"></div>
+                        <template #tipContent1>Client Send Server Receive<br>123 MS</template>
+                        <template #tipContent2>Server Receive Server Send<br>123 MS</template>
+                        <template #tipContent3>Server Send Client Receive<br>123 MS</template>
+                        <div [style.left]="getCs1(span)+'%'" [style.width]="getCs2(span)+'%'" class="waiting-left" [ngbTooltip]="tipContent1" placement="left">&nbsp;</div>
+                        <div [style.left]="getCr1(span)+'%'" [style.width]="getCr2(span)+'%'" class="waiting-right" [ngbTooltip]="tipContent2" placement="left">&nbsp;</div>
+                        <div [style.left]="getSr(span)+'%'" [style.width]="getSs(span)+'%'" class="server" [ngbTooltip]="tipContent3" placement="left">{{formatSpanInfo(span)}}</div>
 
-                    <div *ngFor="let annotation of getUserAnnotations(span)" [style.left]="getAnnotation(annotation)+'%'" class="annotation"></div>
-                </div>
-            </td>
-            <td></td>
-        </tr>
+                        <div *ngFor="let annotation of getUserAnnotations(span)" [style.left]="getAnnotation(annotation)+'%'" class="annotation"></div>
+                    </div>
+                </td>
+                <td class="col-md-1"></td>
+            </tr>
+        </tbody>
     </table>
 </div>

@@ -1,23 +1,18 @@
 <div>
-    <div class="panel panel-primary">
-
-        <div class="panel-body">
-            <form class="form-horizontal">
-                <div class="form-group  form-group-sm">
-                    <label for="serviceSelect" class="col-sm-2 control-label">Service</label>
-                    <div class="col-sm-5">
-                        <select class="form-control" #serviceSelect>
+    <form>
+        <div class="form-group row">
+            <label for="serviceSelect" class="col-sm-2 col-form-label">Service</label>
+            <div class="col-sm-5">
+                <select class="form-control" #serviceSelect>
                         <option *ngFor="let o of zipkin.services" [value]="o">{{o}}</option>
                         </select>
-                    </div>
-                </div>
+            </div>
+        </div>
 
-                <div class="form-group  form-group-sm">
-
-
-                    <label for="timeSelection" class="col-sm-2 control-label">Time range</label>
-                    <div class="col-sm-2">
-                        <select class="form-control" #timeSelection (change)="updateTimeRange(timeSelection.value)">
+        <div class="form-group row">
+            <label for="timeSelection" class="col-sm-2 col-form-label">Time range</label>
+            <div class="col-sm-2">
+                <select class="form-control" #timeSelection (change)="updateTimeRange(timeSelection.value)">
                         <option value="15">Last 15 minutes</option>
                         <option value="30">Last 30 minutes</option>
                         <option value="60">Last hour</option>
@@ -27,73 +22,71 @@
                         <option value="1440">Last day</option>
                         <option value="custom">User defined</option>
                     </select>
-                    </div>
-                    <label for="durationInput" class="col-sm-1 control-label">Duration</label>
-                    <div class="col-sm-2">
-                        <div class="input-group ">
-                            <div class="input-group-addon">>=</div>
-                            <input type="number" class="form-control" #durationInput placeholder="" [value]="minDuration">
-                            <div class="input-group-addon">μs</div>
-                        </div>
-                    </div>
+            </div>
+            <label for="durationInput" class="col-sm-1 col-form-label">Duration</label>
+            <div class="col-sm-2">
+                <div class="input-group ">
+                    <div class="input-group-addon">>=</div>
+                    <input type="number" class="form-control" #durationInput placeholder="" [value]="minDuration">
+                    <div class="input-group-addon">μs</div>
+                </div>
+            </div>
 
-                    <label for="limitSelect" class="col-sm-1 control-label">Limit</label>
-                    <div class="col-sm-2">
-                        <select class="form-control" #limitSelect>
+            <label for="limitSelect" class="col-sm-1 col-form-label">Limit</label>
+            <div class="col-sm-2">
+                <select class="form-control" #limitSelect>
                         <option value="10">10 traces</option>
                         <option value="50">50 traces</option>
                         <option value="100">100 traces</option>
                         </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-sm" (click)="find(serviceSelect.value, timeSelection.value, durationInput.value , limitSelect.value, startDateInput.value, startTimeInput.value, endDateInput.value, endTimeInput.value)">Find traces</button>
-                </div>
-                <div [hidden]="!customTime">
-                    <div class="form-group form-group-sm">
-                        <label for="startDateInput" class="col-sm-2 control-label">From</label>
-                        <div class="col-sm-2">
-                            <input type="date" class="form-control" #startDateInput [value]="formatDate(startDate)">
-                        </div>
-
-                        <div class="col-sm-2">
-                            <input type="time" class="form-control" #startTimeInput [value]="formatTime(startDate)">
-                        </div>
-                    </div>
-
-                    <div class="form-group form-group-sm">
-                        <label for="endDateInput" class="col-sm-2 control-label">To</label>
-                        <div class="col-sm-2">
-                            <input type="date" class="form-control" #endDateInput [value]="formatDate(endDate)">
-                        </div>
-
-                        <div class="col-sm-2">
-                            <input type="time" class="form-control" #endTimeInput [value]="formatTime(endDate)">
-                        </div>
-                    </div>
-                </div>
-
-            </form>
+            </div>
+            <button type="submit" class="btn btn-primary" (click)="find(serviceSelect.value, timeSelection.value, durationInput.value , limitSelect.value, startDateInput.value, startTimeInput.value, endDateInput.value, endTimeInput.value)">Find traces</button>
         </div>
-    </div>
+        <div [hidden]="!customTime">
+            <div class="form-group row">
+                <label for="startDateInput" class="col-sm-2 col-form-label">From</label>
+                <div class="col-sm-2">
+                    <input type="date" class="form-control" #startDateInput [value]="formatDate(startDate)">
+                </div>
+
+                <div class="col-sm-2">
+                    <input type="time" class="form-control" #startTimeInput [value]="formatTime(startDate)">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="endDateInput" class="col-sm-2 col-form-label">To</label>
+                <div class="col-sm-2">
+                    <input type="date" class="form-control" #endDateInput [value]="formatDate(endDate)">
+                </div>
+
+                <div class="col-sm-2">
+                    <input type="time" class="form-control" #endTimeInput [value]="formatTime(endDate)">
+                </div>
+            </div>
+        </div>
+
+    </form>
 
     <div class="list-group">
         <span *ngFor="let trace of zipkin.traces" class="list-group-item">
             <div >
-                <span class="col-sm-4">
+                <span class="col-sm-5">
                         <template #tipContent>Trace <b>Hash Color</b><br></template>
                         <button class="btn btn-default btn-sm btn-expander" style="padding-left:8px;padding-right:8px;padding-top:2px;padding-bottom:2px;" (click)=trace.toggleTrace()>{{trace.expandedText()}}</button>
                         <span [ngbTooltip]="tipContent" placement="top" class="color-identifier" [style.background-color]="trace.color" >&nbsp;</span>
-                        <b>{{trace.name}} - {{trace.id}}</b>
-                </span>
-                <span class="col-sm-2">{{trace.formatTimestamp()}}</span>
-                <span class="col-sm-2">{{trace.formatDuration()}}</span>
-
-                <span class="label label-default">{{trace.spans.length}} spans</span>
-
-            </div>
-            <div [hidden]="!trace.expanded" style="padding-top:12px;">
-                <!-- GANTT GOES HERE -->
-                <tracechart [trace]="trace"></tracechart>
-            </div>
+        <b>{{trace.name}} - {{trace.id}}</b>
         </span>
+        <span class="col-sm-2">{{trace.formatTimestamp()}}</span>
+        <span class="col-sm-2">{{trace.formatDuration()}}</span>
+
+        <span class="label label-default">{{trace.spans.length}} spans</span>
+
     </div>
+    <div [hidden]="!trace.expanded" style="padding-top:12px;">
+        <!-- GANTT GOES HERE -->
+        <tracechart [trace]="trace"></tracechart>
+    </div>
+    </span>
+</div>
 </div>

@@ -19,8 +19,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
         TraceChartComponent
     ],
     imports: [
-        NgbModule,
         BrowserModule,
+        NgbModule,
         FormsModule,
         HttpModule,
         JsonpModule,
