@@ -1,7 +1,8 @@
-import {Component, ElementRef} from '@angular/core';
+import {Component, ElementRef, TemplateRef} from '@angular/core';
 import { Inject, Input } from '@angular/core';
 import { Span, Trace, Traces, Annotation, ZipkinService } from './../zipkin/zipkin';
 import * as moment from 'moment';
+import {NgbModal, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({ selector: 'tracechart', template: require('./tracechart.component.html') })
 export class TraceChartComponent {
@@ -9,7 +10,12 @@ export class TraceChartComponent {
     minTime: number;
     maxTime: number;
 
-    constructor() {
+    constructor(private modal: NgbModal) {
+    }
+
+    open(content: any) {
+        let options : NgbModalOptions = {"size":"lg"};
+        this.modal.open(content,options);
     }
 
     ngOnInit() {
@@ -70,7 +76,7 @@ export class TraceChartComponent {
     formatSpanDetails(span: Span) {
         var res = "";
         span.annotations.forEach(annotation => {
-            res += annotation.value + " " +  annotation.endpoint.serviceName + " (" + annotation.endpoint.ipv4 + ":" + annotation.endpoint.port + ")" + "\r\n";
+            res += annotation.value + " " + annotation.endpoint.serviceName + " (" + annotation.endpoint.ipv4 + ":" + annotation.endpoint.port + ")" + "\r\n";
         });
         return res;
     }
@@ -80,11 +86,11 @@ export class TraceChartComponent {
     }
 
     formatDateTime(timestamp: number) {
-        return moment(timestamp/1000).format("YYYY-MM-DD - HH:mm:SS")
+        return moment(timestamp / 1000).format("YYYY-MM-DD - HH:mm:SS")
     }
 
     formatRelativeTime(timestamp: number) {
-        return moment.duration((timestamp-this.minTime) / 1000).asMilliseconds() + " MS";
+        return moment.duration((timestamp - this.minTime) / 1000).asMilliseconds() + " MS";
     }
 
     getPercent(timestamp: number) {
@@ -93,11 +99,11 @@ export class TraceChartComponent {
         return Math.round(current / total * 100);
     }
 
-    getAnnotation(annotation : Annotation) {
+    getAnnotation(annotation: Annotation) {
         return this.getPercent(annotation.timestamp);
     }
 
-    time(no: number){
+    time(no: number) {
         var total = this.maxTime - this.minTime;
         var part = total / 5;
         var res = Math.round(part * no / 1000);

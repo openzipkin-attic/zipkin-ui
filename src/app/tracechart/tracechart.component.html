@@ -33,27 +33,38 @@
                         <div class="timeline timeline4"></div>
                         <div class="timeline timeline5"></div>
                         <div class="timeline timeline6"></div>
-                        <template #tipContent>
-                            <table style="font-size:10px;">
-                                <tr>
-                                    <th>Date Time</th>
-                                    <th>Relative Time</th>
-                                    <th>Annotation</th>
-                                    <th>Address</th>>
-                                </tr>
-                                <tr *ngFor="let annotation of span.annotations">
-                                    <td>{{formatDateTime(annotation.timestamp)}}</td>
-                                    <td>{{formatRelativeTime(annotation.timestamp)}}</td>
-                                    <td>{{annotation.value}}</td>
-                                    <td>{{annotation.endpoint.ipv4}}:{{annotation.endpoint.port}} ({{annotation.endpoint.serviceName}})</td>
-                                </tr>
-                            </table>
 
-
+                        <template #content let-c="close" let-d="dismiss" >
+                            <div class="modal-header">
+                                <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h4 class="modal-title">Modal title</h4>
+                            </div>
+                            <div class="modal-body">
+                                <table>
+                                    <tr>
+                                        <th>Date Time</th>
+                                        <th>Relative Time</th>
+                                        <th>Annotation</th>
+                                        <th>Address</th>
+                                    </tr>
+                                    <tr *ngFor="let annotation of span.annotations">
+                                        <td>{{formatDateTime(annotation.timestamp)}}</td>
+                                        <td>{{formatRelativeTime(annotation.timestamp)}}</td>
+                                        <td>{{annotation.value}}</td>
+                                        <td>{{annotation.endpoint.ipv4}}:{{annotation.endpoint.port}} ({{annotation.endpoint.serviceName}})</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+                            </div>
                         </template>
-                        <div [style.left]="getCs1(span)+'%'" [style.width]="getCs2(span)+'%'" class="waiting-left" [ngbPopover]="tipContent" placement="top" triggers="mouseenter:mouseleave" title="{{formatServiceName(span)}}">&nbsp;</div>
-                        <div [style.left]="getCr1(span)+'%'" [style.width]="getCr2(span)+'%'" class="waiting-right" [ngbPopover]="tipContent" placement="top" triggers="mouseenter:mouseleave" title="{{formatServiceName(span)}}">&nbsp;</div>
-                        <div [style.left]="getSr(span)+'%'" [style.width]="getSs(span)+'%'" class="server" [ngbPopover]="tipContent" placement="top" triggers="mouseenter:mouseleave" title="{{formatServiceName(span)}}">{{formatSpanInfo(span)}}</div>
+
+                        <div [style.left]="getCs1(span)+'%'" [style.width]="getCs2(span)+'%'" class="waiting-left" (click)="open(content)">&nbsp;</div>
+                        <div [style.left]="getCr1(span)+'%'" [style.width]="getCr2(span)+'%'" class="waiting-right" (click)="open(content)">&nbsp;</div>
+                        <div [style.left]="getSr(span)+'%'" [style.width]="getSs(span)+'%'" class="server" (click)="open(content)">{{formatSpanInfo(span)}}</div>
 
                         <div *ngFor="let annotation of getUserAnnotations(span)" [style.left]="getAnnotation(annotation)+'%'" class="annotation"></div>
                     </div>
