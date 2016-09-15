@@ -1,5 +1,5 @@
 .btn-expander {
-    width: 30px;
+    width: 23px;
 }
 .span {
     width:100%;
@@ -103,13 +103,14 @@ tr:hover .server {
 }
 
 .color-identifier {
-    width:15px;
+    width:23px;
     height:24px;
     display:inline-block;
     margin-left:5px;
-    margin-right:5px;
+    margin-right:15px;
     border-radius: 3px;
     opacity: 0.5;
+    border: 1px solid white;
 }
 
 .container {

@@ -79,8 +79,9 @@
         <span *ngFor="let trace of zipkin.traces" class="list-group-item">
             <div >
                 <span class="col-sm-4">
+                        <template #tipContent>Trace <b>Hash Color</b><br></template>
                         <button class="btn btn-default btn-sm btn-expander" style="padding-left:8px;padding-right:8px;padding-top:2px;padding-bottom:2px;" (click)=trace.toggleTrace()>{{trace.expandedText()}}</button>
-                        <span ngbTooltip="Call graph hash color" placement="top" class="color-identifier" [style.background-color]="trace.color" >&nbsp;</span>
+                        <span [ngbTooltip]="tipContent" placement="top" class="color-identifier" [style.background-color]="trace.color" >&nbsp;</span>
                         <b>{{trace.name}} - {{trace.id}}</b>
                 </span>
                 <span class="col-sm-2">{{trace.formatTimestamp()}}</span>

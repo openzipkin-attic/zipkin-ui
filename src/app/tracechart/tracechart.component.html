@@ -30,10 +30,12 @@
                     <div class="timeline timeline4"></div>
                     <div class="timeline timeline5"></div>
                     <div class="timeline timeline6"></div>
-
-                    <div [style.left]="getCs1(span)+'%'" [style.width]="getCs2(span)+'%'" class="waiting-left"></div>
-                    <div [style.left]="getCr1(span)+'%'" [style.width]="getCr2(span)+'%'" class="waiting-right"></div>
-                    <div [style.left]="getSr(span)+'%'" [style.width]="getSs(span)+'%'" class="server">{{formatSpanInfo(span)}}</div>
+                    <template #tipContent1>Client Send Server Receive<br>123 MS</template>
+                    <template #tipContent2>Server Receive Server Send<br>123 MS</template>
+                    <template #tipContent3>Server Send Client Receive<br>123 MS</template>
+                    <div [style.left]="getCs1(span)+'%'" [style.width]="getCs2(span)+'%'" class="waiting-left" [ngbTooltip]="tipContent1" placement="left"></div>
+                    <div [style.left]="getCr1(span)+'%'" [style.width]="getCr2(span)+'%'" class="waiting-right" [ngbTooltip]="tipContent2" placement="left"></div>
+                    <div [style.left]="getSr(span)+'%'" [style.width]="getSs(span)+'%'" class="server" [ngbTooltip]="tipContent3" placement="left">{{formatSpanInfo(span)}}</div>
 
                     <div *ngFor="let annotation of getUserAnnotations(span)" [style.left]="getAnnotation(annotation)+'%'" class="annotation"></div>
                 </div>
