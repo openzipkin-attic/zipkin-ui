@@ -9,6 +9,7 @@ import {HomeComponent} from './home/home.component';
 import {TraceChartComponent} from './tracechart/tracechart.component';
 import {ZipkinService} from './zipkin/zipkin';
 import {DependenciesComponent} from './dependencies/dependencies.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
     declarations: [
@@ -18,6 +19,7 @@ import {DependenciesComponent} from './dependencies/dependencies.component';
         TraceChartComponent
     ],
     imports: [
+        NgbModule,
         BrowserModule,
         FormsModule,
         HttpModule,
