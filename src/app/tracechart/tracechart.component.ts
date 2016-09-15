@@ -3,7 +3,6 @@ import { Inject, Input } from '@angular/core';
 import { Span, Trace, Traces, Annotation, ZipkinService } from './../zipkin/zipkin';
 import * as moment from 'moment';
 
-
 @Component({ selector: 'tracechart', template: require('./tracechart.component.html') })
 export class TraceChartComponent {
     @Input() trace: Trace
@@ -11,7 +10,6 @@ export class TraceChartComponent {
     maxTime: number;
 
     constructor() {
-
     }
 
     ngOnInit() {
@@ -24,7 +22,6 @@ export class TraceChartComponent {
                 this.maxTime = Math.max(this.maxTime, annotation.timestamp);
             });
         });
-        console.log(this.minTime + ", " + this.maxTime);
     }
 
     getSystemAnnotation(span: Span, name: string) {

@@ -6,8 +6,6 @@ import {HttpModule, JsonpModule} from '@angular/http';
 import {AppComponent} from './app.component';
 import {routing, appRoutingProviders} from './app.routing';
 import {HomeComponent} from './home/home.component';
-import {AboutComponent} from './about/about.component';
-import {TraceComponent} from './trace/trace.component';
 import {TraceChartComponent} from './tracechart/tracechart.component';
 import {ZipkinService} from './zipkin/zipkin';
 import {DependenciesComponent} from './dependencies/dependencies.component';
@@ -16,8 +14,6 @@ import {DependenciesComponent} from './dependencies/dependencies.component';
     declarations: [
         AppComponent,
         HomeComponent,
-        AboutComponent,
-        TraceComponent,
         DependenciesComponent,
         TraceChartComponent
     ],
@@ -34,3 +30,4 @@ import {DependenciesComponent} from './dependencies/dependencies.component';
 
 export class AppModule {
 }
+
