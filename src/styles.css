@@ -129,3 +129,10 @@ tr:hover .server:hover {
 .popover{
     max-width: 100%; /* Max Width of the popover (depending on the container!) */
 }
+
+.searchbox {
+    padding: 2rem 1rem;
+    margin-bottom: 2rem;
+    background-color: #eceeef;
+    border-radius: 0.3rem;
+}

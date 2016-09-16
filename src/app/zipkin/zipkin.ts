@@ -132,6 +132,7 @@ export class ZipkinService {
 
     constructor( @Inject(Http) private http: Http) {
         this.baseUri = "localhost";
+        this.traces = null;
     }
 
     getServices() {
@@ -163,6 +164,10 @@ export class ZipkinService {
 
                 this.traces = traces.map(spans => new Trace(spans));
             });
+    }
+
+    hasTraces() {
+        return this.traces != null && this.traces.length > 0;
     }
 }
 

@@ -1,5 +1,5 @@
 <div>
-    <form>
+    <form class="searchbox">
         <div class="form-group row">
             <label for="serviceSelect" class="col-sm-2 col-form-label">Service</label>
             <div class="col-sm-5">
@@ -75,18 +75,21 @@
                         <template #tipContent>Trace <b>Hash Color</b><br></template>
                         <button class="btn btn-default btn-sm btn-expander" style="padding-left:8px;padding-right:8px;padding-top:2px;padding-bottom:2px;" (click)=trace.toggleTrace()>{{trace.expandedText()}}</button>
                         <span [ngbTooltip]="tipContent" placement="top" class="color-identifier" [style.background-color]="trace.color" >&nbsp;</span>
-        <b>{{trace.name}} - {{trace.id}}</b>
+                        <b>{{trace.name}} - {{trace.id}}</b>
+                </span>
+                <span class="col-sm-2">{{trace.formatTimestamp()}}</span>
+                <span class="col-sm-2">{{trace.formatDuration()}}</span>
+
+                <span class="label label-default">{{trace.spans.length}} spans</span>
+
+            </div>
+            <div [hidden]="!trace.expanded" style="padding-top:12px;">
+                <!-- GANTT GOES HERE -->
+                <tracechart [trace]="trace"></tracechart>
+            </div>
         </span>
-        <span class="col-sm-2">{{trace.formatTimestamp()}}</span>
-        <span class="col-sm-2">{{trace.formatDuration()}}</span>
-
-        <span class="label label-default">{{trace.spans.length}} spans</span>
-
     </div>
-    <div [hidden]="!trace.expanded" style="padding-top:12px;">
-        <!-- GANTT GOES HERE -->
-        <tracechart [trace]="trace"></tracechart>
+    <div [hidden]="zipkin.hasTraces()" class="alert alert-info">
+        Please select the criteria for your trace lookup.
     </div>
-    </span>
-</div>
 </div>
