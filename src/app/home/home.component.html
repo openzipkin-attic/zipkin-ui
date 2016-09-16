@@ -69,8 +69,8 @@
     </form>
 
     <div class="list-group">
-        <span *ngFor="let trace of zipkin.traces" class="list-group-item">
-            <div (click)=trace.toggleTrace()>
+        <template ngFor let-trace [ngForOf]="zipkin.traces" >
+            <div (click)=trace.toggleTrace() class="list-group-item list-group-item-action" style="cursor:pointer">
                 <span class="col-sm-5">
                         <template #tipContent>Trace <b>Hash Color</b><br></template>
                         <span [ngbTooltip]="tipContent" placement="top" class="color-identifier" [style.background-color]="trace.color" >&nbsp;</span>
@@ -82,11 +82,11 @@
                 <span class="label label-default">{{trace.spans.length}} spans</span>
 
             </div>
-            <div [hidden]="!trace.expanded" style="padding-top:12px;">
+            <div [hidden]="!trace.expanded" style="padding-top:12px;background-color:white" class="list-group-item">
                 <!-- GANTT GOES HERE -->
                 <tracechart [trace]="trace"></tracechart>
             </div>
-        </span>
+        </template>
     </div>
     <div [hidden]="zipkin.hasTraces()" class="bd-callout bd-callout-warning">
         <b>Please select the criteria for your trace lookup.</b>
