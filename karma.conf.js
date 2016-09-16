@@ -26,7 +26,15 @@ module.exports = function (config) {
             ]
         },
 
-        reporters: [ 'mocha', 'coverage' ],
+        junitReporter: {
+            outputDir: 'junit/',
+            useBrowserName: false
+        },
+
+        // Coveralls token set on CircleCI UI
+        // JUnit formatting is used to report test success / failure to CircleCI
+        reporters: [ 'mocha', 'coverage', 'junit', 'coveralls' ],
+
         port: 9876,
         colors: true,
         logLevel: config.LOG_INFO,
