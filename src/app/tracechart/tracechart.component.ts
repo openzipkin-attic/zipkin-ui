@@ -17,8 +17,8 @@ export class TraceChartComponent {
     }
 
     open(content: any) {
-        let options : NgbModalOptions = {"size":"lg"};
-        this.modal.open(content,options);
+        let options: NgbModalOptions = { "size": "lg" };
+        this.modal.open(content, options);
     }
 
     ngOnInit() {
