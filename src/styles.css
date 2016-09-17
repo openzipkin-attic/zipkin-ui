@@ -187,3 +187,27 @@ tr:hover .server:hover {
 .bd-callout-danger h4 {
   color: #d9534f;
 }
+
+.service-name-header {
+    padding-right:0;
+}
+
+.service-name {
+    padding-right:0;
+}
+
+.span-line {
+    padding-left:2px !important;
+}
+
+.btn-service-expander {
+    padding: 0px;
+    line-height: 9px;
+    width: 14px;
+    height: 14px;
+    vertical-align: middle;
+    background-color: #fff;
+    border:1px solid #d0d0d0;
+    font-size: 10px;
+    margin-top: -3px
+}

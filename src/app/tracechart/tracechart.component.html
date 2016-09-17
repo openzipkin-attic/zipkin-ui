@@ -1,14 +1,14 @@
 <div>
-    <table class="table table-borderless table-hover" style="border:0px;">
+    <table class="table table-borderless " style="border:0px;">
         <thead class="thead">
             <tr>
-                <th class="col-md-1">Service</th>
-                <th class="col-md-10">Timeline</th>
+                <th class="col-md-2 service-name-header" >Service</th>
+                <th class="col-md-9 span-line">Timeline</th>
                 <th class="col-md-1"></th>
             </tr>
             <tr>
-                <td class="col-md-1"></td>
-                <td class="col-md-10">
+                <td class="col-md-2 service-name-header"></td>
+                <td class="col-md-9 span-line">
                     <div class="span">
                         <div class="timeline timeline1">{{time(0)}}</div>
                         <div class="timeline timeline2">{{time(1)}}</div>
@@ -24,8 +24,8 @@
         </thead>
         <tbody>
             <tr *ngFor="let span of trace.spans">
-                <td class="col-md-1">{{formatServiceName(span)}}</td>
-                <td class="col-md-10">
+                <td class="col-md-2 service-name"><a href="#"><button class="btn-service-expander">+</button> {{formatServiceName(span)}}</a></td>
+                <td class="col-md-9  span-line">
                     <div class="span">
                         <div class="timeline timeline1"></div>
                         <div class="timeline timeline2"></div>
