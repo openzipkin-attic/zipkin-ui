@@ -6,11 +6,14 @@ import {HttpModule, JsonpModule} from '@angular/http';
 import {AppComponent} from './app.component';
 import {routing, appRoutingProviders} from './app.routing';
 import {HomeComponent} from './home/home.component';
+import {SearchBoxComponent} from './searchbox/searchbox.component';
 import {TraceChartComponent} from './tracechart/tracechart.component';
+import {TraceGraphComponent} from './tracegraph/tracegraph.component';
+import {TraceListComponent} from './tracelist/tracelist.component';
 import {ZipkinService} from './zipkin/zipkin';
 import {DependenciesComponent} from './dependencies/dependencies.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {TraceGraphComponent} from './tracegraph/tracegraph.component'
+
 import { FaComponent } from 'angular2-fontawesome/components';
 
 @NgModule({
@@ -20,7 +23,9 @@ import { FaComponent } from 'angular2-fontawesome/components';
         DependenciesComponent,
         TraceChartComponent,
         TraceGraphComponent,
-        FaComponent
+        TraceListComponent,
+        FaComponent,
+        SearchBoxComponent
     ],
     imports: [
         BrowserModule,
