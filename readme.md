@@ -1,6 +1,8 @@
 ## zipkin-ui
 > This project is generated with [yo angular2-typescript generator](https://github.com/shibbir/generator-angular2-typescript) version 0.6.2.
 
+![zipkinui](zipkinui.png)
+
 ## Installation
 
 ```bash
