@@ -1,6 +1,7 @@
-<div class="list-group">
+<ul class="list-group">
     <template ngFor let-trace [ngForOf]="zipkin.traces">
-        <div (click)=trace.toggleTrace() class="list-group-item list-group-item-action" style="cursor:pointer">
+        <li (click)=trace.toggleTrace() class="list-group-item list-group-item-action" style="cursor:pointer">
+            &nbsp;
             <span class="col-sm-5">
 
                         <template #tipContent>Trace <b>Hash Color</b><br></template>
@@ -10,11 +11,11 @@
             <span class="col-sm-2">{{trace.formatTimestamp()}}</span>
             <span class="col-sm-2">{{trace.formatDuration()}}</span>
 
-            <span class="label label-default">{{trace.spans.length}} spans</span>
+            <span class="col-sm-2">{{trace.spans.length}} spans</span>
 
-        </div>
-        <div [hidden]="!trace.expanded" class="list-group-item" style="border-top:0px">
+        </li>
+        <li [hidden]="!trace.expanded" class="list-group-item" style="border-top:0px">
             <tracechart [trace]="trace"></tracechart>
-        </div>
+        </li>
     </template>
-</div>
+</ul>

@@ -4,7 +4,7 @@ import { ZipkinService, Trace } from './../zipkin/zipkin';
 import * as moment from 'moment'
 
 export class TraceGroup {
-    constructor(public key: string, public traces: Trace[],public name:string, public color:string) { }
+    constructor(public key: string, public traces: Trace[],public name:string, public color:string,public spans:number) { }
 }
 @Component({ selector: 'tracegrouplist', template: require('./tracegrouplist.component.html') })
 export class TraceGroupListComponent {
@@ -24,7 +24,7 @@ export class TraceGroupListComponent {
         let res: TraceGroup[] = [];
         for (let key in groups) {
             let traces = groups[key];
-            res.push(new TraceGroup(key, traces,traces[0].name, traces[0].color ));
+            res.push(new TraceGroup(key, traces,traces[0].name, traces[0].color, traces[0].spans.length ));
         }
         return res;
     }

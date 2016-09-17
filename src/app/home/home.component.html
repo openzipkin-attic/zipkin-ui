@@ -1,4 +1,9 @@
 <div>
     <searchbox></searchbox>
-    <tracegrouplist></tracegrouplist>
+    <div class="btn-group" role="group">
+        <button type="radio" name="viewMode" class="btn btn-secondary" (click)="setListView()">List</button>
+        <button type="radio" name="viewMode" class="btn btn-secondary" (click)="setGroupView()">Grouped</button>
+    </div>
+    <tracelist *ngIf="!grouped"></tracelist>
+    <tracegrouplist *ngIf="grouped"></tracegrouplist>
 </div>
