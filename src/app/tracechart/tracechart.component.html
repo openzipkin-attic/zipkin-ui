@@ -26,7 +26,9 @@
             <tr *ngFor="let span of trace.spans">
                 <td class="col-md-2 service-name"  [style.padding-left]="getSpanDepth(span)">
                     <a (click)="toggleSpan(span)" href="javascript:void(0)">
-                        <button class="btn-service-expander">{{span.expanded?"-":"+"}}</button>
+
+                        <button class="btn-service-expander" *ngIf="span.children.length>0">{{span.expanded?"-":"+"}}</button>
+                        <div class="btn-service-expander-empty" *ngIf="span.children.length==0"></div>
                         {{formatServiceName(span)}}</a></td>
                 <td class="col-md-9  span-line">
                     <div class="span">

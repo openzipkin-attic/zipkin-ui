@@ -211,3 +211,16 @@ tr:hover .server:hover {
     font-size: 10px;
     margin-top: -3px
 }
+
+.btn-service-expander-empty {
+    display: inline-block;
+     padding: 0px;
+    line-height: 9px;
+    width: 14px;
+    height: 14px;
+    vertical-align: middle;
+    background-color: #fff;
+    border:1px solid #fff;
+    font-size: 10px;
+    margin-top: -3px
+}
