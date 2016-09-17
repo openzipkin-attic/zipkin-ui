@@ -24,7 +24,10 @@
         </thead>
         <tbody>
             <tr *ngFor="let span of trace.spans">
-                <td class="col-md-2 service-name"><a href="#"><button class="btn-service-expander">+</button> {{formatServiceName(span)}}</a></td>
+                <td class="col-md-2 service-name"  [style.padding-left]="getSpanDepth(span)">
+                    <a (click)="toggleSpan(span)">
+                        <button class="btn-service-expander">{{span.expanded?"-":"+"}}</button>
+                        {{formatServiceName(span)}}</a></td>
                 <td class="col-md-9  span-line">
                     <div class="span">
                         <div class="timeline timeline1"></div>

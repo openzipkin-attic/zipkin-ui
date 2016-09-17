@@ -32,6 +32,7 @@ export interface Span {
     parent: Span;
     children: Span[];
     expanded: boolean;
+    depth: number;
 }
 
 export class Trace {
@@ -40,10 +41,11 @@ export class Trace {
     id: string;
     name: string;
     color: string;
+    root: Span;
     constructor(spans: Span[]) {
-        let root = spans[0];
-        this.name = root.annotations[1].endpoint.serviceName;
-        this.id = root.traceId;
+        this.root = spans[0];
+        this.name = this.root.annotations[1].endpoint.serviceName;
+        this.id = this.root.traceId;
 
         let lookup: { [id: string]: Span } = {};
         spans.forEach(span => {
@@ -70,8 +72,9 @@ export class Trace {
             }
 
         });
-        this.sortTrace(root);
-        this.spans.forEach(span => {
+
+        let sortedSpans = this.getSortedSpans();
+        sortedSpans.forEach(span => {
             uniqueId += span.name + span.annotations[0].endpoint.serviceName;
         });
         if (error) {
@@ -80,6 +83,12 @@ export class Trace {
             this.color = "#" + Math.abs(this.hashString(uniqueId)).toString(16).substr(0, 6);
         }
 
+    }
+
+    getSortedSpans() {
+        this.spans = [];
+        this.sortTrace(this.root,0);
+        return this.spans;
     }
 
     hashString(str: string) {
@@ -113,12 +122,15 @@ export class Trace {
         this.expanded = !this.expanded;
     }
 
-    sortTrace(span: Span) {
+    sortTrace(span: Span, depth: number) {
+        span.depth = depth;
         this.spans.push(span);
         span.children.sort((a, b) => a.annotations[0].timestamp - b.annotations[0].timestamp);
-        span.children.forEach(child => {
-            this.sortTrace(child);
-        });
+        if (span.expanded) {
+            span.children.forEach(child => {
+                this.sortTrace(child, depth + 1);
+            });
+        }
     }
 }
 

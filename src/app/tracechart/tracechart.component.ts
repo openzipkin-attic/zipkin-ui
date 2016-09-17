@@ -4,7 +4,10 @@ import { Span, Trace, Traces, Annotation, ZipkinService } from './../zipkin/zipk
 import * as moment from 'moment';
 import {NgbModal, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
 
-@Component({ selector: 'tracechart', template: require('./tracechart.component.html') })
+@Component({
+    selector: 'tracechart',
+    template: require('./tracechart.component.html')
+})
 export class TraceChartComponent {
     @Input() trace: Trace
     minTime: number;
@@ -68,6 +71,14 @@ export class TraceChartComponent {
         return result;
     }
 
+    getSpanDepth(span: Span) {
+        return (span.depth * 10) + "px";
+    }
+
+    toggleSpan(span: Span) {
+        span.expanded = !span.expanded;
+        this.trace.getSortedSpans();
+    }
 
     formatServiceName(span: Span) {
         return span.annotations[1].endpoint.serviceName;
