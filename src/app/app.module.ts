@@ -10,6 +10,7 @@ import {TraceChartComponent} from './tracechart/tracechart.component';
 import {ZipkinService} from './zipkin/zipkin';
 import {DependenciesComponent} from './dependencies/dependencies.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {TraceGraphComponent} from './tracegraph/tracegraph.component'
 import { FaComponent } from 'angular2-fontawesome/components';
 
 @NgModule({
@@ -17,7 +18,9 @@ import { FaComponent } from 'angular2-fontawesome/components';
         AppComponent,
         HomeComponent,
         DependenciesComponent,
-        TraceChartComponent
+        TraceChartComponent,
+        TraceGraphComponent,
+        FaComponent
     ],
     imports: [
         BrowserModule,
