@@ -11,7 +11,7 @@
             <span class="label label-default">{{group.spans}} spans</span>
         </li>
         <template ngFor let-trace [ngForOf]="group.traces">
-            <li (click)=trace.toggleTrace() class="list-group-item list-group-item-action" style="cursor:pointer">
+            <li (click)=trace.toggleTrace() class="list-group-item list-group-item-action" style="cursor:pointer;border-left:10px solid #f0f0f0;">
                 &nbsp;
                 <span class="col-sm-5">
                 <b>{{trace.id}}</b>
@@ -22,7 +22,7 @@
                 <span class="col-sm-2">&nbsp;</span>
 
             </li>
-            <li [hidden]="!trace.expanded" class="list-group-item" style="border-top:0px">
+            <li [hidden]="!trace.expanded" class="list-group-item" style="border-top:0px;border-left:10px solid #f0f0f0;">
                 <tracechart [trace]="trace"></tracechart>
             </li>
         </template>
