@@ -233,8 +233,20 @@ circle {
   stroke-width: 1.5px;
 }
 
+rect {
+  fill: #ccc;
+  stroke: #333;
+  stroke-width: 1.5px;
+}
+
 text {
-  font: 10px sans-serif;
+  font: 14px sans-serif;
+  font-weight: bold;
   pointer-events: none;
-  text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
+  text-shadow:
+       1px 1px 0 #fff,
+     -1px -1px 0 #fff,
+      1px -1px 0 #fff,
+      -1px 1px 0 #fff,
+       1px 1px 0 #fff;
 }

@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit, Inject} from '@angular/core';
 import * as d3 from 'd3'
-
+import { Http, Headers, HTTP_PROVIDERS } from '@angular/http';
 
 @Component({
     selector: 'tracegraph',
@@ -10,7 +10,7 @@ import * as d3 from 'd3'
 
 export class TraceGraphComponent implements OnInit {
 
-    constructor( @Inject(ElementRef) private element: ElementRef) {
+    constructor( @Inject(ElementRef) private element: ElementRef, @Inject(Http) private http: Http) {
     }
 
 
@@ -18,118 +18,100 @@ export class TraceGraphComponent implements OnInit {
 
 
     ngOnInit() {
-        console.log("afterViewInit() called");
-        d3.select(this.element.nativeElement).select("h1").style("background-color", "yellow");
+
+        this
+            .http
+            .get(`http://localhost:9411/api/v1/dependencies?endTs=1474202825157&lookback=86399999`, {})
+            .subscribe(res => {
+                let zip = <any>(res.json());
+
+                let links = zip.map((v: any) => ({
+                    source: v["parent"],
+                    target: v["child"],
+                    type: "suit"
+                }));
+
+                let nodes: { [key: string]: any } = {};
+
+                // Compute the distinct nodes from the links.
+                links.forEach((link: any) => {
+                    link.source = nodes[link.source] || (nodes[link.source] = { name: link.source });
+                    link.target = nodes[link.target] || (nodes[link.target] = { name: link.target });
+                });
+
+                let width = 960;
+                let height = 500;
+
+                // Use elliptical arc path segments to doubly-encode directionality.
+                let tick = function () {
+                    path.attr("d", linkArc);
+                    circle.attr("transform", transform);
+                    text.attr("transform", transform);
+                }
+
+                let linkArc = function (d: any) {
+                    let dx = d.target.x - d.source.x;
+                    let dy = d.target.y - d.source.y;
+                    let dr = Math.sqrt(dx * dx + dy * dy);
+                    return `M${d.source.x},${d.source.y}A${dr},${dr} 0 0,1 ${d.target.x},${d.target.y}`;
+                }
+
+                let transform = (d: any) => `translate(${d.x},${d.y})`;
+
+                let force = d3.layout.force()
+                    .nodes(d3.values(nodes))
+                    .links(links)
+                    .size([width, height])
+                    .linkDistance(150)
+                    .linkStrength(1)
+                    .gravity(0.05)
+                    .charge(-700)
+                    .on("tick", tick)
+                    .start();
+
+                let svg = d3.select(this.element.nativeElement).append("svg")
+                    .attr("width", "100%")
+                    .attr("height", height);
+
+                // Per-type markers, as they don't inherit styles.
+                svg.append("defs").selectAll("marker")
+                    .data(["suit", "licensing", "resolved"])
+                    .enter().append("marker")
+                    .attr("id", (d: any) => d)
+                    .attr("viewBox", "0 -5 10 10")
+                    .attr("refX", 15)
+                    .attr("refY", -1.5)
+                    .attr("markerWidth", 10)
+                    .attr("markerHeight", 10)
+                    .attr("orient", "auto")
+                    .append("path")
+                    .attr("d", "M0,-5L10,0L0,5");
+
+                let path = svg.append("g").selectAll("path")
+                    .data(force.links())
+                    .enter().append("path")
+                    .attr("class", (d: any) => "link " + d.type)
+                    .attr("marker-end", (d: any) => "url(#" + d.type + ")");
+
+                let circle = svg.append("g").selectAll("circle")
+                    .data(force.nodes())
+                    .enter().append("circle")
+                    .attr("r", 15)
+                    .call(force.drag);
+
+                let text = svg.append("g").selectAll("text")
+                    .data(force.nodes())
+                    .enter().append("text")
+                    .attr("x", -12)
+                    .attr("y", ".31em")
+                    .text((d: any) => d.name);
 
 
-        // http://blog.thomsonreuters.com/index.php/mobile-patent-suits-graphic-of-the-day/
-        var links = [
-            { source: "Microsoft", target: "Amazon", type: "licensing" },
-            { source: "Microsoft", target: "HTC", type: "licensing" },
-            { source: "Samsung", target: "Apple", type: "suit" },
-            { source: "Motorola", target: "Apple", type: "suit" },
-            { source: "Nokia", target: "Apple", type: "resolved" },
-            { source: "HTC", target: "Apple", type: "suit" },
-            { source: "Kodak", target: "Apple", type: "suit" },
-            { source: "Microsoft", target: "Barnes & Noble", type: "suit" },
-            { source: "Microsoft", target: "Foxconn", type: "suit" },
-            { source: "Oracle", target: "Google", type: "suit" },
-            { source: "Apple", target: "HTC", type: "suit" },
-            { source: "Microsoft", target: "Inventec", type: "suit" },
-            { source: "Samsung", target: "Kodak", type: "resolved" },
-            { source: "LG", target: "Kodak", type: "resolved" },
-            { source: "RIM", target: "Kodak", type: "suit" },
-            { source: "Sony", target: "LG", type: "suit" },
-            { source: "Kodak", target: "LG", type: "resolved" },
-            { source: "Apple", target: "Nokia", type: "resolved" },
-            { source: "Qualcomm", target: "Nokia", type: "resolved" },
-            { source: "Apple", target: "Motorola", type: "suit" },
-            { source: "Microsoft", target: "Motorola", type: "suit" },
-            { source: "Motorola", target: "Microsoft", type: "suit" },
-            { source: "Huawei", target: "ZTE", type: "suit" },
-            { source: "Ericsson", target: "ZTE", type: "suit" },
-            { source: "Kodak", target: "Samsung", type: "resolved" },
-            { source: "Apple", target: "Samsung", type: "suit" },
-            { source: "Kodak", target: "RIM", type: "suit" },
-            { source: "Nokia", target: "Qualcomm", type: "suit" }
-        ];
-
-        var nodes = {};
-
-        // Compute the distinct nodes from the links.
-        links.forEach(function (link) {
-            link.source = nodes[link.source] || (nodes[link.source] = { name: link.source });
-            link.target = nodes[link.target] || (nodes[link.target] = { name: link.target });
-        });
-
-        var width = 960,
-            height = 500;
-
-        // Use elliptical arc path segments to doubly-encode directionality.
-        var tick = function () {
-            path.attr("d", linkArc);
-            circle.attr("transform", transform);
-            text.attr("transform", transform);
-        }
-
-        var linkArc = function (d: any) {
-            var dx = d.target.x - d.source.x,
-                dy = d.target.y - d.source.y,
-                dr = Math.sqrt(dx * dx + dy * dy);
-            return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
-        }
-
-        var transform = function (d: any) {
-            return "translate(" + d.x + "," + d.y + ")";
-        }
-
-        var force = d3.layout.force()
-            .nodes(d3.values(nodes))
-            .links(links)
-            .size([width, height])
-            .linkDistance(60)
-            .charge(-300)
-            .on("tick", tick)
-            .start();
-
-        var svg = d3.select(this.element.nativeElement).append("svg")
-            .attr("width", width)
-            .attr("height", height);
-
-        // Per-type markers, as they don't inherit styles.
-        svg.append("defs").selectAll("marker")
-            .data(["suit", "licensing", "resolved"])
-            .enter().append("marker")
-            .attr("id", function (d) { return d; })
-            .attr("viewBox", "0 -5 10 10")
-            .attr("refX", 15)
-            .attr("refY", -1.5)
-            .attr("markerWidth", 6)
-            .attr("markerHeight", 6)
-            .attr("orient", "auto")
-            .append("path")
-            .attr("d", "M0,-5L10,0L0,5");
-
-        var path = svg.append("g").selectAll("path")
-            .data(force.links())
-            .enter().append("path")
-            .attr("class", function (d: any) { return "link " + d.type; })
-            .attr("marker-end", function (d: any) { return "url(#" + d.type + ")"; });
-
-        var circle = svg.append("g").selectAll("circle")
-            .data(force.nodes())
-            .enter().append("circle")
-            .attr("r", 6)
-            .call(force.drag);
-
-        var text = svg.append("g").selectAll("text")
-            .data(force.nodes())
-            .enter().append("text")
-            .attr("x", 8)
-            .attr("y", ".31em")
-            .text(function (d: any) { return d.name; });
-
-
-
+                var k = 0;
+                while ((force.alpha() > 1e-2) && (k < 550)) {
+                    (<any>force).tick(),
+                        k = k + 1;
+                }
+            });
     }
 }
