@@ -62,10 +62,10 @@ export class TraceGraphComponent implements OnInit {
                     .nodes(d3.values(nodes))
                     .links(links)
                     .size([width, height])
-                    .linkDistance(150)
-                    .linkStrength(1)
-                    .gravity(0.05)
                     .charge(-700)
+    .gravity(0.1)
+    .friction(0.9)
+    .linkDistance(120)
                     .on("tick", tick)
                     .start();
 
@@ -96,14 +96,14 @@ export class TraceGraphComponent implements OnInit {
                 let circle = svg.append("g").selectAll("circle")
                     .data(force.nodes())
                     .enter().append("circle")
-                    .attr("r", 15)
+                    .attr("r", 12)
                     .call(force.drag);
 
                 let text = svg.append("g").selectAll("text")
                     .data(force.nodes())
                     .enter().append("text")
-                    .attr("x", -12)
-                    .attr("y", ".31em")
+                   .attr("dy", 12 + 15)
+        .attr("text-anchor", "middle")
                     .text((d: any) => d.name);
 
 
