@@ -1,6 +1,6 @@
 import { Injectable, Inject} from '@angular/core';
-import * as moment from 'moment'
-import { Http, Headers, HTTP_PROVIDERS } from '@angular/http';
+import * as moment from 'moment';
+import { Http } from '@angular/http';
 
 export interface Endpoint {
     serviceName: string;
@@ -11,6 +11,8 @@ export interface Endpoint {
 export interface Annotation {
     timestamp: any;
     value: string;
+    isJson: boolean;
+    json: any;
     endpoint: Endpoint;
 }
 
@@ -54,23 +56,26 @@ export class Trace {
             lookup[span.id] = span;
         });
         var error = false;
-        var uniqueId = "";
+        var uniqueId = '';
         spans.forEach(span => {
             if (span.parentId) {
                 span.parent = lookup[span.parentId];
                 if (span.parent == undefined) {
                     console.log(span.parentId);
-                    console.log("undefined parent");
                     error = true;
                 } else {
                     span.parent.children.push(span);
                 }
 
-            }
-            else {
+            } else {
                 span.parent = null;
             }
-
+            span.annotations = span.annotations || [];
+            span.binaryAnnotations = span.binaryAnnotations || [];
+            span.annotations.forEach(a => {
+                a.json = this.getAnnotationJson(a.value);
+                a.isJson = a.json != null;
+            });
         });
 
         let sortedSpans = this.getSortedSpans();
@@ -78,22 +83,33 @@ export class Trace {
             uniqueId += span.name + span.annotations[0].endpoint.serviceName;
         });
         if (error) {
-            this.color = "#ff0000";
+            this.color = '#ff0000';
         } else {
-            this.color = "#" + Math.abs(this.hashString(uniqueId)).toString(16).substr(0, 6);
+            this.color = '#' + Math.abs(this.hashString(uniqueId)).toString(16).substr(0, 6);
         }
+    }
 
+     getAnnotationJson(value: string) {
+        if (value.startsWith('{') || value.startsWith('[')) {
+            try {
+                let res = JSON.parse(value);
+                return res;
+            } catch (x) {
+                return null;
+            }
+        }
+        return null;
     }
 
     getSortedSpans() {
         this.spans = [];
-        this.sortTrace(this.root,0);
+        this.sortTrace(this.root, 0);
         return this.spans;
     }
 
     hashString(str: string) {
         var hash = 0, i: number, chr: number, len: number;
-        if (str.length === 0) return hash;
+        if (str.length === 0) { return hash; }
         for (i = 0, len = str.length; i < len; i++) {
             chr = str.charCodeAt(i);
             hash = ((hash << 5) - hash) + chr;
@@ -112,9 +128,9 @@ export class Trace {
 
     expandedText() {
         if (this.expanded) {
-            return "-";
+            return '-';
         } else {
-            return "+";
+            return '+';
         }
     }
 
@@ -134,16 +150,15 @@ export class Trace {
     }
 }
 
-export type Traces = Trace[]
 
 @Injectable()
 export class ZipkinService {
-    traces: Traces;
+    traces: Trace[];
     baseUri: string;
     services: string[];
 
     constructor( @Inject(Http) private http: Http) {
-        this.baseUri = "localhost";
+        this.baseUri = 'localhost';
         this.traces = null;
     }
 
@@ -153,21 +168,22 @@ export class ZipkinService {
             .get(`http://${this.baseUri}:9411/api/v1/services`, {})
             .subscribe(res => {
                 this.services = <string[]>(res.json());
-                this.services.push("[any]");
+                this.services.push('[any]');
                 this.services.sort();
             });
     }
+
+
 
     getTraces(serviceName: string, startDate: Date, endDate: Date, limit: number, minDuration: string | number) {
         let endTs = startDate.getTime();
         let lookback = endTs - endDate.getTime();
 
         var uri = `http://${this.baseUri}:9411/api/v1/traces?endTs=${endTs}&lookback=${lookback}&annotationQuery=&limit=${limit}&minDuration=${minDuration}&spanName=all`;
-        if (serviceName != undefined && serviceName != "[any]") {
-            uri += `&serviceName=${serviceName}`
+        if (serviceName != undefined && serviceName != '[any]') {
+            uri += `&serviceName=${serviceName}`;
         }
 
-        console.log(uri);
         this
             .http
             .get(uri, {})
