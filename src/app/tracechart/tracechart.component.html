@@ -56,7 +56,7 @@
                                     <tr *ngFor="let annotation of span.annotations">
                                         <td>{{formatDateTime(annotation.timestamp)}}</td>
                                         <td>{{formatRelativeTime(annotation.timestamp)}}</td>
-                                        <td>{{annotation.value}}</td>
+                                        <td>{{formatAnnotation(annotation.value)}}</td>
                                         <td>{{annotation.endpoint.ipv4}}:{{annotation.endpoint.port}} ({{annotation.endpoint.serviceName}})</td>
                                     </tr>
                                 </table>

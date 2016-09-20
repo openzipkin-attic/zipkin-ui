@@ -8,12 +8,25 @@ import {NgbModal, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
     selector: 'tracechart',
     template: require('./tracechart.component.html')
 })
-export class TraceChartComponent  implements OnInit {
+export class TraceChartComponent implements OnInit {
     @Input() trace: Trace;
     minTime: number;
     maxTime: number;
+    static systemAnnotations: string[] = ['cr', 'cs', 'sr', 'ss', 'ws', 'wr', 'srf', 'ssf', 'crf', 'csf'];
+    static systemAnnotationNames: { [key: string]: string } = {
+        'sr': 'Server Receive',
+        'ss': 'Server Send',
+        'srf': 'Server Receive Fragment',
+        'ssf': 'Server Send Fragment',
+        'cr': 'Client Receive',
+        'cs': 'Client Send',
+        'crf': 'Client Receive Fragment',
+        'csf': 'Client Send Fragment',
+        'ws': 'Wire Send',
+        'wr': 'Wire Receive'
+    };
 
-    constructor(@Inject(NgbModal) private modal: NgbModal) {
+    constructor( @Inject(NgbModal) private modal: NgbModal) {
     }
 
     open(content: any) {
@@ -67,7 +80,7 @@ export class TraceChartComponent  implements OnInit {
 
     getUserAnnotations(span: Span) {
         let annotations = span.annotations || [];
-        let result = annotations.filter((v, i) => v.value != 'cr' && v.value != 'cs' && v.value != 'sr' && v.value != 'ss');
+        let result = annotations.filter((v, i) => !TraceChartComponent.systemAnnotations.includes(v.value));
         return result;
     }
 
@@ -86,8 +99,8 @@ export class TraceChartComponent  implements OnInit {
 
     formatSpanDetails(span: Span) {
         var res = '';
-        span.annotations.forEach(annotation => {
-            res += annotation.value + ' ' + annotation.endpoint.serviceName + ' (' + annotation.endpoint.ipv4 + ':' + annotation.endpoint.port + ')' + '\r\n';
+        span.annotations.forEach(a => {
+            res += `${a.value} ${a.endpoint.serviceName} (${a.endpoint.ipv4}:${a.endpoint.port})`;
         });
         return res;
     }
@@ -101,7 +114,11 @@ export class TraceChartComponent  implements OnInit {
     }
 
     formatRelativeTime(timestamp: number) {
-        return moment.duration((timestamp - this.minTime) / 1000).asMilliseconds() + ' MS';
+        return moment.duration((timestamp - this.minTime) / 1000).asMilliseconds() + ' ms';
+    }
+
+    formatAnnotation(name: string) {
+        return TraceChartComponent.systemAnnotationNames[name] || name;
     }
 
     getPercent(timestamp: number) {
