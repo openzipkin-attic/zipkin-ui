@@ -1,34 +1,37 @@
-import {Component, Inject, Input} from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 
 @Component({
     selector: 'jsonviewer',
     template: `
-    <span *ngIf="isObject(json)">
-        {{ '{' }}
-        <table>
-            <tr *ngFor="let item of iterateObject(json)">
-                <td>
-                    <b style="vertical-align:top">{{item.key}}: </b>
-                    <div style="display:inline-block"><jsonviewer [json]="item.value"></jsonviewer></div> ,
-                </td>
-            </tr>
-        </table>
-        {{ '}' }}
+    <span [ngSwitch]="valueKind(json)">
+        <template [ngSwitchCase]="'object'">
+            {{ '{' }}
+            <table style="margin-left:20px;">
+                <tr *ngFor="let item of iterateObject(json) #last = last">
+                    <td>
+                        <b style="vertical-align:top">{{item.key}}: </b>
+                        <jsonviewer [json]="item.value"></jsonviewer> <span *ngIf="!last">,</span>
+                    </td>
+                </tr>
+            </table>
+            {{ '}' }}
+        </template>
+        <template [ngSwitchCase]="'array'">
+        [
+            <table style="margin-left:20px;">
+                <tr *ngFor="let item of json #last = last">
+                    <td><jsonviewer [json]="item"></jsonviewer> <span *ngIf="!last">,</span></td>
+                </tr>
+            </table>
+        ]
+        </template>
+        <span *ngSwitchCase="'string'" style="color:green" >"{{json}}"</span>
+        <span *ngSwitchCase="'boolean'" style="color:blue">{{json}}</span>
+        <span *ngSwitchCase="'number'" style="color:blue">{{json}}</span>
+        <span *ngSwitchCase="'null'" style="color:red">null</span>
+        <span *ngSwitchDefault>{{valueKind(json)}}</span>
     </span>
-    <span *ngIf="isArray(json)">
-    [
-        <table>
-            <tr *ngFor="let item of json">
-                <td><jsonviewer [json]="item"></jsonviewer> ,</td>
-            </tr>
-        </table>
-    ]
-    </span>
-    <span style="color:green" *ngIf="isString(json)">"{{json}}"</span>
-    <span style="color:blue" *ngIf="isBoolean(json)">{{json}}</span>
-    <span style="color:blue" *ngIf="isNumber(json)">{{json}}</span>
-    <span style="color:red" *ngIf="isNull(json)">null</span>
     `
 })
 export class JsonViewerComponent {
@@ -45,6 +48,28 @@ export class JsonViewerComponent {
         return res;
     }
 
+    valueKind(obj: any) {
+        if (this.isNull(obj)) {
+            return 'null';
+        }
+        if (this.isArray(obj)) {
+            return 'array';
+        }
+        if (this.isObject(obj)) {
+            return 'object';
+        }
+        if (this.isString(obj)) {
+            return 'string';
+        }
+        if (this.isBoolean(obj)) {
+            return 'boolean';
+        }
+        if (this.isNumber(obj)) {
+            return 'number';
+        }
+        return 'unknown';
+    }
+
     isNull(obj: any) {
         return obj == null;
     }
@@ -58,9 +83,9 @@ export class JsonViewerComponent {
         return Object.prototype.toString.call(obj) === '[object String]';
     }
     isBoolean(obj: any) {
-        return obj instanceof Boolean;
+        return obj === true || obj === false;
     }
     isNumber(obj: any) {
-        return !this.isArray(obj) && !this.isObject(obj) && !this.isString(obj) && !this.isBoolean(obj);
+        return !isNaN(parseFloat(obj)) && isFinite(obj);
     }
 }
