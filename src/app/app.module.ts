@@ -1,5 +1,4 @@
 import {NgModule} from '@angular/core';
-import {ElementRef} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import {HttpModule, JsonpModule} from '@angular/http';
@@ -12,6 +11,7 @@ import {TraceChartComponent} from './tracechart/tracechart.component';
 import {TraceGraphComponent} from './tracegraph/tracegraph.component';
 import {TraceListComponent} from './tracelist/tracelist.component';
 import {TraceGroupListComponent} from './tracegrouplist/tracegrouplist.component';
+import {JsonViewerComponent} from './jsonviewer/jsonviewer.component';
 import {ZipkinService} from './zipkin/zipkin';
 import {DependenciesComponent} from './dependencies/dependencies.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -28,7 +28,8 @@ import { FaComponent } from 'angular2-fontawesome/components';
         TraceListComponent,
         TraceGroupListComponent,
         FaComponent,
-        SearchBoxComponent
+        SearchBoxComponent,
+        JsonViewerComponent
     ],
     imports: [
         BrowserModule,

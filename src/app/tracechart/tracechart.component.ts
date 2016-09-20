@@ -117,19 +117,6 @@ export class TraceChartComponent implements OnInit {
         return moment.duration((timestamp - this.minTime) / 1000).asMilliseconds() + ' ms';
     }
 
-    annotationIsJson(value: string) {
-        if (value.startsWith('{') || value.startsWith('[')) {
-            try {
-                JSON.parse(value);
-                return true;
-            } catch (x) {
-                return false;
-            }
-
-        }
-        return false;
-    }
-
     formatAnnotation(value: string) {
         return TraceChartComponent.systemAnnotationNames[value] || value;
     }

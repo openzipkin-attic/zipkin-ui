@@ -63,7 +63,7 @@
                                         </tr>
                                         <tr>
                                             <td *ngIf="annotation.isJson" colspan="4">
-                                                <pre><code>{{annotation.value}}</code></pre>
+                                                <jsonviewer [json]="annotation.json"></jsonviewer>
                                             </td>
                                         </tr>
                                     </template>
