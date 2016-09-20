@@ -1,7 +1,7 @@
-import {Component, ElementRef, TemplateRef} from '@angular/core';
+import {Component} from '@angular/core';
 import { Inject } from '@angular/core';
-import { Span, Trace, Traces, ZipkinService } from './../zipkin/zipkin';
-import * as moment from 'moment'
+import { ZipkinService } from './../zipkin/zipkin';
+import * as moment from 'moment';
 
 @Component({
     selector: 'searchbox',
@@ -19,19 +19,19 @@ export class SearchBoxComponent {
         this.limit = 10;
         this.minDuration = 0;
         this.startDate = moment().toDate();
-        this.endDate = moment().subtract(1, "day").toDate();
+        this.endDate = moment().subtract(1, 'day').toDate();
         this.zipkin.getServices();
         this.load();
     }
 
     load() {
-        let minDuration = this.minDuration == 0 ? "" : this.minDuration;
+        let minDuration = this.minDuration == 0 ? '' : this.minDuration;
         let limit = this.limit;
         this.zipkin.getTraces(this.serviceName, this.startDate, this.endDate, limit, minDuration);
     }
 
     updateTimeRange(value: string) {
-        if (value === "custom") {
+        if (value === 'custom') {
             this.customTime = true;
         }
         else {
@@ -40,11 +40,11 @@ export class SearchBoxComponent {
     }
 
     find(serviceName: string, timerange: string, minDuration: string, limit: string, startDate: string, startTime: string, endDate: string, endTime: string) {
-        if (timerange === "custom") {
+        if (timerange === 'custom') {
 
         } else {
             this.startDate = moment().toDate();
-            this.endDate = moment().subtract(timerange, "minutes").toDate();
+            this.endDate = moment().subtract(timerange, 'minutes').toDate();
         }
         this.serviceName = serviceName;
         this.limit = +limit;

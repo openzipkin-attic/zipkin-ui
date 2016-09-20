@@ -38,7 +38,7 @@ import { FaComponent } from 'angular2-fontawesome/components';
         JsonpModule,
         routing,
     ],
-    providers: [appRoutingProviders,ZipkinService],
+    providers: [appRoutingProviders, ZipkinService],
     bootstrap: [AppComponent]
 })
 

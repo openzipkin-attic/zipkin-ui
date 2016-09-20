@@ -1,6 +1,6 @@
-import {Component, ElementRef, TemplateRef} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { Inject, Input } from '@angular/core';
-import { Span, Trace, Traces, Annotation, ZipkinService } from './../zipkin/zipkin';
+import { Span, Trace, Annotation } from './../zipkin/zipkin';
 import * as moment from 'moment';
 import {NgbModal, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
 
@@ -8,16 +8,16 @@ import {NgbModal, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
     selector: 'tracechart',
     template: require('./tracechart.component.html')
 })
-export class TraceChartComponent {
-    @Input() trace: Trace
+export class TraceChartComponent  implements OnInit {
+    @Input() trace: Trace;
     minTime: number;
     maxTime: number;
 
-    constructor(private modal: NgbModal) {
+    constructor(@Inject(NgbModal) private modal: NgbModal) {
     }
 
     open(content: any) {
-        let options: NgbModalOptions = { "size": "lg" };
+        let options: NgbModalOptions = { 'size': 'lg' };
         this.modal.open(content, options);
     }
 
@@ -44,35 +44,35 @@ export class TraceChartComponent {
     }
 
     getCs1(span: Span) {
-        return this.getSystemAnnotation(span, "cs");
+        return this.getSystemAnnotation(span, 'cs');
     }
     getCs2(span: Span) {
-        return this.getSystemAnnotation(span, "sr") - this.getSystemAnnotation(span, "cs");
+        return this.getSystemAnnotation(span, 'sr') - this.getSystemAnnotation(span, 'cs');
     }
 
     getCr1(span: Span) {
-        return this.getSystemAnnotation(span, "ss");
+        return this.getSystemAnnotation(span, 'ss');
     }
     getCr2(span: Span) {
-        return this.getSystemAnnotation(span, "cr") - this.getSystemAnnotation(span, "ss");
+        return this.getSystemAnnotation(span, 'cr') - this.getSystemAnnotation(span, 'ss');
     }
 
     getSr(span: Span) {
-        return this.getSystemAnnotation(span, "sr");
+        return this.getSystemAnnotation(span, 'sr');
     }
 
     getSs(span: Span) {
-        return this.getSystemAnnotation(span, "ss") - this.getSystemAnnotation(span, "sr");
+        return this.getSystemAnnotation(span, 'ss') - this.getSystemAnnotation(span, 'sr');
     }
 
     getUserAnnotations(span: Span) {
         let annotations = span.annotations || [];
-        let result = annotations.filter((v, i) => v.value != "cr" && v.value != "cs" && v.value != "sr" && v.value != "ss");
+        let result = annotations.filter((v, i) => v.value != 'cr' && v.value != 'cs' && v.value != 'sr' && v.value != 'ss');
         return result;
     }
 
     getSpanDepth(span: Span) {
-        return (span.depth * 10) + "px";
+        return (span.depth * 10) + 'px';
     }
 
     toggleSpan(span: Span) {
@@ -85,23 +85,23 @@ export class TraceChartComponent {
     }
 
     formatSpanDetails(span: Span) {
-        var res = "";
+        var res = '';
         span.annotations.forEach(annotation => {
-            res += annotation.value + " " + annotation.endpoint.serviceName + " (" + annotation.endpoint.ipv4 + ":" + annotation.endpoint.port + ")" + "\r\n";
+            res += annotation.value + ' ' + annotation.endpoint.serviceName + ' (' + annotation.endpoint.ipv4 + ':' + annotation.endpoint.port + ')' + '\r\n';
         });
         return res;
     }
 
     formatSpanInfo(span: Span) {
-        return moment.duration(Math.round(span.duration / 1000)).asMilliseconds() + " ms : " + span.name;
+        return moment.duration(Math.round(span.duration / 1000)).asMilliseconds() + ' ms : ' + span.name;
     }
 
     formatDateTime(timestamp: number) {
-        return moment(timestamp / 1000).format("YYYY-MM-DD - HH:mm:SS")
+        return moment(timestamp / 1000).format('YYYY-MM-DD - HH:mm:SS');
     }
 
     formatRelativeTime(timestamp: number) {
-        return moment.duration((timestamp - this.minTime) / 1000).asMilliseconds() + " MS";
+        return moment.duration((timestamp - this.minTime) / 1000).asMilliseconds() + ' MS';
     }
 
     getPercent(timestamp: number) {
@@ -119,6 +119,6 @@ export class TraceChartComponent {
         var part = total / 5;
         var res = Math.round(part * no / 1000);
 
-        return moment.duration(res).asMilliseconds() + " ms";
+        return moment.duration(res).asMilliseconds() + ' ms';
     }
 }

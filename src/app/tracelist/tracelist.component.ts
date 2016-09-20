@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Inject } from '@angular/core';
 import { ZipkinService } from './../zipkin/zipkin';
-import * as moment from 'moment'
+import * as moment from 'moment';
 
 @Component({ selector: 'tracelist', template: require('./tracelist.component.html') })
 export class TraceListComponent {
