@@ -101,9 +101,9 @@ tr:hover .server:hover {
     border: 1px solid #000;
     border-radius: 6px;
     background-color: #fff;
-    height: 17px;
     width: 17px;
     position: absolute;
+    opacity: 0.5;
 }
 
 .color-identifier {

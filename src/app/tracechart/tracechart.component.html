@@ -70,7 +70,7 @@
                         <div [style.left]="getCr1(span)+'%'" [style.width]="getCr2(span)+'%'" class="waiting-right" (click)="open(content)">&nbsp;</div>
                         <div [style.left]="getSr(span)+'%'" [style.width]="getSs(span)+'%'" class="server" (click)="open(content)">{{formatSpanInfo(span)}}</div>
 
-                        <div *ngFor="let annotation of getUserAnnotations(span)" [style.left]="getAnnotation(annotation)+'%'" class="annotation"></div>
+                        <div *ngFor="let annotation of getUserAnnotations(span)" [style.left]="getAnnotation(annotation)+'%'" class="annotation">&nbsp;</div>
                     </div>
                 </td>
                 <td class="col-md-1"></td>
