@@ -1,0 +1,11 @@
+dependencies:
+    pre:
+        - npm install -g npm@3
+
+test:
+    post:
+        # Tell CircleCI about the passed / failed tests via JUnit
+        - mkdir -p $CIRCLE_TEST_REPORTS/junit/
+        - find . -type f -regex "./junit/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
+        # Coverage report goes into the Artifacts tab of each build
+        - cp -r coverage $CIRCLE_ARTIFACTS/
