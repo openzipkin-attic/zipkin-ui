@@ -1,11 +1,9 @@
 .btn-expander {
     width: 18px;
-    height: 18px;
     vertical-align: middle;
     background-color: #fff;
     padding:0;
     border:1px solid gray;
-    line-height: 0px;
 }
 .span {
     width:100%;
