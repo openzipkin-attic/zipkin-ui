@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 
 @Component({
@@ -6,24 +6,26 @@ import {Component, Input} from '@angular/core';
     template: `
     <span [ngSwitch]="valueKind(json)">
         <template [ngSwitchCase]="'object'">
-            {{ '{' }}
-            <table style="margin-left:20px;">
-                <tr *ngFor="let item of iterateObject(json) #last = last">
+            {{ '{' }} <button class="btn-expander" type="button" (click)="toggleExpanded()">{{expanded?"-":"+"}}</button>
+            <table style="margin-left:20px;" [hidden]="!expanded">
+                <tr *ngFor="let item of items; #last = last">
                     <td>
                         <b style="vertical-align:top">{{item.key}}: </b>
                         <jsonviewer [json]="item.value"></jsonviewer> <span *ngIf="!last">,</span>
                     </td>
                 </tr>
             </table>
+            <span [hidden]="expanded">...</span>
             {{ '}' }}
         </template>
         <template [ngSwitchCase]="'array'">
-        [
-            <table style="margin-left:20px;">
-                <tr *ngFor="let item of json #last = last">
+        [ <button class="btn-expander" type="button" (click)="toggleExpanded()">{{expanded?"-":"+"}}</button>
+            <table style="margin-left:20px;" [hidden]="!expanded">
+                <tr *ngFor="let item of json; #last = last">
                     <td><jsonviewer [json]="item"></jsonviewer> <span *ngIf="!last">,</span></td>
                 </tr>
             </table>
+            <span [hidden]="expanded">...</span>
         ]
         </template>
         <span *ngSwitchCase="'string'" style="color:green" >"{{json}}"</span>
@@ -34,15 +36,25 @@ import {Component, Input} from '@angular/core';
     </span>
     `
 })
-export class JsonViewerComponent {
+export class JsonViewerComponent implements OnInit {
+    expanded = false;
     @Input() json: any;
+    items: any[];
     constructor() {
     }
 
-    iterateObject(obj: any) {
+    ngOnInit() {
+        this.items = this.iterateObject();
+    }
+
+    toggleExpanded() {
+        this.expanded = !this.expanded;
+    }
+
+    iterateObject() {
         let res: { key: string, value: any }[] = [];
-        for (let key in obj) {
-            let value = obj[key];
+        for (let key in this.json) {
+            let value = this.json[key];
             res.push({ key: key, value: value });
         }
         return res;
