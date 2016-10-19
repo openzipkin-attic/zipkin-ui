@@ -8,7 +8,7 @@ import {Component, Input, OnInit} from '@angular/core';
         <template [ngSwitchCase]="'object'">
             {{ '{' }} <button class="btn-expander" type="button" (click)="toggleExpanded()">{{expanded?"-":"+"}}</button>
             <table style="margin-left:20px;" [hidden]="!expanded">
-                <tr *ngFor="let item of items; #last = last">
+                <tr *ngFor="let item of items; let last = last">
                     <td>
                         <b style="vertical-align:top">{{item.key}}: </b>
                         <jsonviewer [json]="item.value"></jsonviewer> <span *ngIf="!last">,</span>
@@ -21,7 +21,7 @@ import {Component, Input, OnInit} from '@angular/core';
         <template [ngSwitchCase]="'array'">
         [ <button class="btn-expander" type="button" (click)="toggleExpanded()">{{expanded?"-":"+"}}</button>
             <table style="margin-left:20px;" [hidden]="!expanded">
-                <tr *ngFor="let item of json; #last = last">
+                <tr *ngFor="let item of json; let last = last">
                     <td><jsonviewer [json]="item"></jsonviewer> <span *ngIf="!last">,</span></td>
                 </tr>
             </table>

@@ -33,7 +33,7 @@ import { FaComponent } from 'angular2-fontawesome/components';
     ],
     imports: [
         BrowserModule,
-        NgbModule,
+        NgbModule.forRoot(),
         FormsModule,
         HttpModule,
         JsonpModule,
