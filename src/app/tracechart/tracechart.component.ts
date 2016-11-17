@@ -64,14 +64,14 @@ export class TraceChartComponent implements OnInit {
     }
 
     getCr1(span: Span) {
-        return this.getSystemAnnotation(span, 'ss');
+        return this.getSystemAnnotation(span, 'ss') || this.getSystemAnnotation(span, 'cr');
     }
     getCr2(span: Span) {
         return this.getSystemAnnotation(span, 'cr') - this.getSystemAnnotation(span, 'ss');
     }
 
     getSr(span: Span) {
-        return this.getSystemAnnotation(span, 'sr');
+        return this.getSystemAnnotation(span, 'sr') || this.getSystemAnnotation(span, 'cs');
     }
 
     getSs(span: Span) {
