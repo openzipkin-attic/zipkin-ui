@@ -1,11 +1,11 @@
 {
   "globalDependencies": {
     "bootstrap": "registry:dt/bootstrap#3.3.5+20160619023404",
-    "core-js": "registry:dt/core-js#0.0.0+20160602141332",
+    "core-js": "registry:dt/core-js#0.9.7+20161130133742",
     "d3": "registry:dt/d3#0.0.0+20160907005744",
-    "dagre": "registry:dt/dagre#0.7.0+20160505164908",
+    "dagre": "registry:dt/dagre#0.7.0+20160725212620",
     "dagre-d3": "registry:dt/dagre-d3#0.0.0+20160620231311",
-    "jasmine": "registry:dt/jasmine#2.2.0+20160621224255",
-    "node": "registry:dt/node#6.0.0+20160807145350"
+    "jasmine": "registry:dt/jasmine#2.5.0+20161119044246",
+    "node": "registry:dt/node#6.0.0+20161220160159"
   }
 }

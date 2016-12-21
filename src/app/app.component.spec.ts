@@ -1,9 +1,13 @@
-import {addProviders, inject} from '@angular/core/testing';
+import {TestBed, inject} from '@angular/core/testing';
 
 import {AppComponent} from './app.component';
 
 describe('AppComponent', () => {
-    beforeEach(() => addProviders([AppComponent]));
+    beforeEach(() =>
+               TestBed.configureTestingModule({
+                   providers: [AppComponent],
+               }).compileComponents()
+              );
 
     it('should create the app component', inject([AppComponent], (app: AppComponent) => {
         expect(app).toBeTruthy();
