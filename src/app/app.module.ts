@@ -16,7 +16,7 @@ import {ZipkinService} from './zipkin/zipkin';
 import {DependenciesComponent} from './dependencies/dependencies.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
-import { FaComponent } from 'angular2-fontawesome/components';
+import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome';
 
 @NgModule({
     declarations: [
@@ -27,12 +27,12 @@ import { FaComponent } from 'angular2-fontawesome/components';
         TraceGraphComponent,
         TraceListComponent,
         TraceGroupListComponent,
-        FaComponent,
         SearchBoxComponent,
         JsonViewerComponent
     ],
     imports: [
         BrowserModule,
+        Angular2FontawesomeModule,
         NgbModule.forRoot(),
         FormsModule,
         HttpModule,
@@ -45,4 +45,3 @@ import { FaComponent } from 'angular2-fontawesome/components';
 
 export class AppModule {
 }
-
