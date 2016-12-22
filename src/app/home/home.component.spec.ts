@@ -1,10 +1,17 @@
-import {addProviders, inject} from '@angular/core/testing';
-import {HomeComponent} from './home.component';
+import {TestBed, inject} from '@angular/core/testing';
 import {ZipkinService} from '../zipkin/zipkin';
 import {Http} from '@angular/http';
 
+import {HomeComponent} from './home.component';
+
 describe('HomeComponent', () => {
-    beforeEach(() => addProviders([HomeComponent,ZipkinService]));
+    beforeEach(() =>
+               TestBed.configureTestingModule({
+                   providers: [
+                       HomeComponent
+                   ]
+               }).compileComponents()
+              );
 
     it('should create the home component', inject([HomeComponent], (home: HomeComponent) => {
         expect(home).toBeTruthy();
