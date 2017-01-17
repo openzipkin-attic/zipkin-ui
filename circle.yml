@@ -20,6 +20,7 @@ dependencies:
   override:
     - sudo apt-get install xsltproc
     - ./build-support/go-offline.sh
+    - ./mvnw frontend:install-node-and-npm frontend:npm 
 
 test:
   post:
