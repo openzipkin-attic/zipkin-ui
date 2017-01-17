@@ -34,14 +34,15 @@
     <url>https://github.com/openzipkin/zipkin-ui</url>
     <connection>scm:git:https://github.com/openzipkin/zipkin-ui.git</connection>
     <developerConnection>scm:git:https://github.com/openzipkin/zipkin-ui.git</developerConnection>
-    <tag>0.0.1</tag>
+    <tag>HEAD</tag>
   </scm>
 
+  <!-- Developer section is needed for Maven Central, but doesn't need to include each person -->
   <developers>
     <developer>
-      <id>rogeralsing</id>
-      <name>Roger Johansson</name>
-      <email>zipkin-user@googlegroups.com</email>
+      <id>openzipkin</id>
+      <name>OpenZipkin Gitter</name>
+      <url>https://gitter.im/openzipkin/zipkin</url>
     </developer>
   </developers>
 
