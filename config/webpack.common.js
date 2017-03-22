@@ -50,7 +50,13 @@ module.exports = {
         new webpack.ProvidePlugin({
             $: 'jquery',
             jQuery: 'jquery',
-            'window.jQuery': 'jquery',
+            'window.jQuery': 'jquery'
+        }),
+
+        // Force Bootstrap to pick up on Tether
+        new webpack.ProvidePlugin({
+            tether: 'tether',
+            Tether: 'tether',
             'window.Tether': 'tether'
         }),
 
