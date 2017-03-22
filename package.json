@@ -25,7 +25,7 @@
     "@angular/router": "3.4.10",
     "@ng-bootstrap/ng-bootstrap": "^1.0.0-alpha.21",
     "angular2-fontawesome": "^0.8.0",
-    "bootstrap": "^4.0.0-alpha.6",
+    "bootstrap": "3.3.7",
     "dagre": "^0.7.4",
     "dagre-d3": "^0.4.17",
     "font-awesome": "~4.7.0",
