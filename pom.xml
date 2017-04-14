@@ -4,7 +4,7 @@
 
   <groupId>io.zipkin.ui</groupId>
   <artifactId>zipkin-ui</artifactId>
-  <version>0.1.1-SNAPSHOT</version>
+  <version>0.2.0</version>
   <packaging>jar</packaging>
 
   <properties>
@@ -34,7 +34,7 @@
     <url>https://github.com/openzipkin/zipkin-ui</url>
     <connection>scm:git:https://github.com/openzipkin/zipkin-ui.git</connection>
     <developerConnection>scm:git:https://github.com/openzipkin/zipkin-ui.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>0.2.0</tag>
   </scm>
 
   <!-- Developer section is needed for Maven Central, but doesn't need to include each person -->
