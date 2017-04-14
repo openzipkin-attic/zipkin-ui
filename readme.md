@@ -20,7 +20,15 @@ $ wget -O zipkin.jar 'https://search.maven.org/remote_content?g=io.zipkin.java&a
 $ java -jar zipkin.jar
 ```
 
+If you want to test against a different zipkin server, export the `ZIPKIN_BASE_URL` appropriately.
+
+```bash
+$ ZIPKIN_BASE_URL=http://192.168.99.100:9411 npm start
+```
+
 ## Production Build
+The production build is made for same origin deployment. Take a look at our [nginx configuration](https://github.com/openzipkin/docker-zipkin/blob/master/zipkin-ui/nginx.conf) for an example. This is used in the "openzipkin/zipkin-ui" docker image.
+
 ```bash
 $ npm run build
 ```
