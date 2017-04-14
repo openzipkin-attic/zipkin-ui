@@ -158,7 +158,7 @@ export class ZipkinService {
     services: string[];
 
     constructor( @Inject(Http) private http: Http) {
-        this.baseUrl = process.env.ZIPKIN_BASE_URL || 'http://localhost:9411';
+        this.baseUrl = process.env.ZIPKIN_BASE_URL || ''; // default to same origin
         this.traces = null;
     }
 

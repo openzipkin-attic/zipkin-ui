@@ -12,7 +12,7 @@ export class TraceGraphComponent implements OnInit {
     baseUrl: string;
 
     constructor( @Inject(ElementRef) private element: ElementRef, @Inject(Http) private http: Http) {
-        this.baseUrl = process.env.ZIPKIN_BASE_URL || 'http://localhost:9411';
+        this.baseUrl = process.env.ZIPKIN_BASE_URL || ''; // default to same origin
     }
 
     ngOnInit() {
