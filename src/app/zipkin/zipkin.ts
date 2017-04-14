@@ -154,18 +154,18 @@ export class Trace {
 @Injectable()
 export class ZipkinService {
     traces: Trace[];
-    baseUri: string;
+    baseUrl: string;
     services: string[];
 
     constructor( @Inject(Http) private http: Http) {
-        this.baseUri = 'localhost';
+        this.baseUrl = process.env.ZIPKIN_BASE_URL || 'http://localhost:9411';
         this.traces = null;
     }
 
     getServices() {
         this
             .http
-            .get(`http://${this.baseUri}:9411/api/v1/services`, {})
+            .get(`${this.baseUrl}/api/v1/services`, {})
             .subscribe(res => {
                 this.services = <string[]>(res.json());
                 this.services.push('[any]');
@@ -179,7 +179,7 @@ export class ZipkinService {
         let endTs = startDate.getTime();
         let lookback = endTs - endDate.getTime();
 
-        var uri = `http://${this.baseUri}:9411/api/v1/traces?endTs=${endTs}&lookback=${lookback}&annotationQuery=&limit=${limit}&minDuration=${minDuration}&spanName=all`;
+        var uri = `${this.baseUrl}/api/v1/traces?endTs=${endTs}&lookback=${lookback}&annotationQuery=&limit=${limit}&minDuration=${minDuration}&spanName=all`;
         if (serviceName != undefined && serviceName != '[any]') {
             uri += `&serviceName=${serviceName}`;
         }

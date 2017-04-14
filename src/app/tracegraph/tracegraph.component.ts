@@ -9,15 +9,18 @@ import { Http } from '@angular/http';
 })
 
 export class TraceGraphComponent implements OnInit {
+    baseUri: string;
+    basePort: string;
 
     constructor( @Inject(ElementRef) private element: ElementRef, @Inject(Http) private http: Http) {
+        this.baseUrl = process.env.ZIPKIN_BASE_URL || 'http://localhost:9411';
     }
 
     ngOnInit() {
 
         this
             .http
-            .get(`http://localhost:9411/api/v1/dependencies?endTs=1474206961061&lookback=86400000`, {})
+            .get(`${this.baseUrl}/api/v1/dependencies?endTs=1474206961061&lookback=86400000`, {})
             .subscribe(res => {
                 let zip = <any>(res.json());
 
