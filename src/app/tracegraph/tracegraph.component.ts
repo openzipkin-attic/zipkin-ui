@@ -13,15 +13,14 @@ export class TraceGraphComponent implements OnInit {
     basePort: string;
 
     constructor( @Inject(ElementRef) private element: ElementRef, @Inject(Http) private http: Http) {
-        this.baseUri = process.env.ZIPKIN_HOST || 'localhost';
-        this.basePort = process.env.ZIPKIN_PORT || '9411';
+        this.baseUrl = process.env.ZIPKIN_BASE_URL || 'http://localhost:9411';
     }
 
     ngOnInit() {
 
         this
             .http
-            .get(`http://${this.baseUri}:${this.basePort}/api/v1/dependencies?endTs=1474206961061&lookback=86400000`, {})
+            .get(`${this.baseUrl}/api/v1/dependencies?endTs=1474206961061&lookback=86400000`, {})
             .subscribe(res => {
                 let zip = <any>(res.json());
 

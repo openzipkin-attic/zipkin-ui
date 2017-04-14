@@ -5,8 +5,7 @@ var commonConfig = require('./webpack.common.js');
 var helpers = require('./helpers');
 
 const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
-const ZIPKIN_HOST = process.env.ZIPKIN_HOST;
-const ZIPKIN_PORT = process.env.ZIPKIN_PORT;
+const ZIPKIN_BASE_URL = process.env.ZIPKIN_BASE_URL;
 
 module.exports = webpackMerge(commonConfig, {
     devtool: 'source-map',
@@ -25,8 +24,7 @@ module.exports = webpackMerge(commonConfig, {
         new webpack.DefinePlugin({
             'process.env': {
                 'ENV': JSON.stringify(ENV),
-                'ZIPKIN_HOST': JSON.stringify(ZIPKIN_HOST),
-                'ZIPKIN_PORT': JSON.stringify(ZIPKIN_PORT)
+                'ZIPKIN_BASE_URL': JSON.stringify(ZIPKIN_BASE_URL)
             }
         }),
         new webpack.LoaderOptionsPlugin({
