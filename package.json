@@ -23,7 +23,7 @@
     "@angular/platform-browser": "2.4.10",
     "@angular/platform-browser-dynamic": "2.4.10",
     "@angular/router": "3.4.10",
-    "@ng-bootstrap/ng-bootstrap": "^1.0.0-alpha.21",
+    "@ng-bootstrap/ng-bootstrap": "1.0.0-alpha.21",
     "angular2-fontawesome": "^0.8.0",
     "bootstrap": "3.3.7",
     "dagre": "^0.7.4",
