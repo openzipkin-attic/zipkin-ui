@@ -14,7 +14,7 @@
     "postinstall": "typings install",
     "test": "karma start"
   },
-  "//": "specify the ng-bootstrap version to '1.0.0-alpha.24'(the lastest version supportted by angular2), because the newer version need angular4 support.",
+  "//": "the ng-bootstrap version is pinned to the last version supporting angular2; newer versions require angular4",
   "dependencies": {
     "@angular/common": "2.4.10",
     "@angular/compiler": "2.4.10",
